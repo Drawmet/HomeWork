@@ -12,6 +12,9 @@ export default class AutoItem extends Component{
                     <li>{item.type}</li>
                     <li>{item.model}</li>
                     <li style={{color : item.color}}>{item.color}</li>
+                    <li>
+                        <img alt="" style={{width: '100px'}} src={item.image} />
+                    </li>
                 </ul>
             )
         });
