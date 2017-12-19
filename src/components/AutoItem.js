@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
 import actions from '../actions/index';
+import Maps from './components/Maps';
 
 
 class AutoItem extends Component{
@@ -38,6 +39,14 @@ class AutoItem extends Component{
                     </ul>
                 )
             });
+        const markers = [{
+            name:"first",
+            location:{
+                lat: 50.3,
+                lng: 30.3,
+            },
+            img: img
+        }];
 
             return(
                 <div className="container">
@@ -47,10 +56,10 @@ class AutoItem extends Component{
                         </p>
                     </Link>
                     {item}
-                </div>
+                <Maps markers={markers}/>
+            </div>
             );
         } else return <div></div>
-
     }
 }
 
