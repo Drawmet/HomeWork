@@ -17,8 +17,8 @@ export class Maps extends Component {
     };
 
     markerOnClick = ({name, position}) => {
-        const car = this.props.markers[0].items
-            .filter(item => item.type === name)[0];
+        const car = this.props.markers
+            .find(item => item.type === name);
         this.setState({
             showingInfoWindow: true,
             selectedPlace: {
@@ -47,7 +47,7 @@ export class Maps extends Component {
 
     render() {
         console.log(this.state.selectedPlace);
-        const markersOnMap = this.props.markers[0].items.map((item, index) => (
+        const markersOnMap = this.props.markers.map((item, index) => (
             <Marker
                 key={"marker_" + index}
                 title={item.type}

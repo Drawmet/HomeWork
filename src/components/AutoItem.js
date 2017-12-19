@@ -15,8 +15,9 @@ class AutoItem extends Component {
 
     render() {
         const {list, match} = this.props;
+
         if (list.length > 0) {
-            const item = list.filter(item => item.name === match.params.name);
+            const item = list.find(item => item.name === match.params.name);
 
             return (
                 <div className="container">
@@ -25,7 +26,7 @@ class AutoItem extends Component {
                             back
                         </p>
                     </Link>
-                    <Maps markers={item}/>
+                    <Maps markers={item.items}/>
                 </div>
             );
         }
