@@ -1,7 +1,7 @@
 const api = [
     {
         name: 'BMW',
-        items:[
+        items: [
             {
                 type: 'X5',
                 model: 'Crossover',
@@ -25,11 +25,12 @@ const api = [
                 image: 'https://photos-3.carwow.co.uk/blog/1600/Deep-sea-blue.jpg',
                 latitude: 40.7127753,
                 longitude: -74.0059728
-            }],
+            }
+        ],
     },
     {
         name: 'Mazda',
-        items:[
+        items: [
             {
                 type: 'RX7',
                 model: 'Sedan',
@@ -53,7 +54,8 @@ const api = [
                 image: 'http://2.bp.blogspot.com/-CtFNBR3r0tU/VGsh3UErC1I/AAAAAAAACIo/MerUTC5Q5kU/s1600/2015%2BMazda%2BRX-9%2BDesign%2BReview.jpg',
                 latitude: 35.6894875,
                 longitude: 139.69170639999993
-            }]
+            }
+        ]
     },
     {
         name: 'Mersedes',
@@ -81,7 +83,9 @@ const api = [
                 image: 'https://top-car.ru/upload/gallery/big/p193h1hmepalc1uoo7quel11plv2.jpg',
                 latitude: 52.52000659999999,
                 longitude: 13.404953999999975
-            }]
-    }];
+            }
+        ]
+    }
+];
 
 export default api;

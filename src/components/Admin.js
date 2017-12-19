@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-export default class Admin extends Component{
+export default class Admin extends Component {
     render() {
         return (
             <div className="container">
                 <Link to="/">
-                    <p>
-                        back
-                    </p>
+                    <p>back</p>
                 </Link>
                 <ul>
                     <li>

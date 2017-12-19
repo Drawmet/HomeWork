@@ -1,26 +1,26 @@
-import actionsTypes from '../actions/actionsTypes.js'
+import * as CarActions from '../actions/carActions.js'
 
 const defaultState = {
-    list: [],
+    list: []
 };
 
-export default function(state = defaultState, action) {
+export default (state = defaultState, action) => {
     switch (action.type) {
-        case actionsTypes.GET_LIST_CARS:
+        case CarActions.ACTION_CAR_GET_LIST:
             return {
-                list: action.list
+                ...action.payload
             };
-        case actionsTypes.ADD_CAR:
-            return {
-                // ...state,
-                // list: action.payload.coordinates
-            };
-        case actionsTypes.EDIT_CAR:
+        case CarActions.ACTION_CAR_ADD:
             return {
                 // ...state,
                 // list: action.payload.coordinates
             };
-        case actionsTypes.DELETE_CAR:
+        case CarActions.ACTION_CAR_EDIT:
+            return {
+                // ...state,
+                // list: action.payload.coordinates
+            };
+        case CarActions.ACTION_CAR_DELETE:
             return {
                 // ...state,
                 // list: action.payload.coordinates
