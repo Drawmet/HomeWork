@@ -15,9 +15,9 @@ import User from './components/User';
 import {Route, Switch} from 'react-router-dom';
 import AutoItem from "./components/AutoItem";
 
-const store = createStore(() => {}, {}
-    // Reducer,
-    // applyMiddleware(thunk)
+const store = createStore(
+    Reducer,
+    applyMiddleware(thunk)
 );
 
 const Auto = () => (
