@@ -17,15 +17,13 @@ export class Maps extends Component {
     };
 
     markerOnClick = ({name, position}) => {
-        const img = this.props.markers
-            .filter(item => item.name === name)[0].img;
-
+        const car = this.props.markers[0].items
+            .filter(item => item.type === name)[0];
         this.setState({
             showingInfoWindow: true,
             selectedPlace: {
-                name: name,
                 position: position,
-                img: img
+                ...car,
             }
         })
     };
@@ -48,12 +46,14 @@ export class Maps extends Component {
     }
 
     render() {
-        const markersOnMap = this.props.markers.map((item, index) => (
+        console.log(this.state.selectedPlace);
+        const markersOnMap = this.props.markers[0].items.map((item, index) => (
             <Marker
                 key={"marker_" + index}
-                title={item.name}
-                name={item.name}
-                position={item.location}
+                title={item.type}
+                name={item.type}
+                data={item}
+                position={{lat: item.latitude, lng: item.longitude}}
                 onClick={this.markerOnClick}
             />
         ));
@@ -77,13 +77,14 @@ export class Maps extends Component {
                     onClose={this.infoWindowClose}
                 >
                     <div>
-                        <h1>{this.state.selectedPlace.name}</h1>
+                        <h1>{this.state.selectedPlace.type}</h1>
                         <img
-                            src={this.state.selectedPlace.img}
+                            src={this.state.selectedPlace.image}
                             width={150}
                             height={100}
                             alt={''}
                         />
+                        <p>{this.state.selectedPlace.model}</p>
                     </div>
                 </InfoWindow>
             </Map>
