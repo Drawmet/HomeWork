@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import api from '../data/api';
+import Maps from './components/Maps';
 
 export default class AutoItem extends Component{
     render(){
@@ -15,6 +16,14 @@ export default class AutoItem extends Component{
                 </ul>
             )
         });
+        const markers = [{
+            name:"first",
+            location:{
+                lat: 50.3,
+                lng: 30.3,
+            },
+            img: img
+        }];
 
         return(
             <div className="container">
@@ -24,6 +33,7 @@ export default class AutoItem extends Component{
                     </p>
                 </Link>
                 {item}
+                <Maps markers={markers}/>
             </div>
         );
     }
