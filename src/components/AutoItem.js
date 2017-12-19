@@ -1,30 +1,60 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import api from '../data/api';
+import { connect } from "react-redux";
+import actions from '../actions/index';
 
-export default class AutoItem extends Component{
+
+class AutoItem extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: []
+        };
+    }
+
+    componentDidMount(){
+        this.props.getListCars();
+    }
+
+    getCoordinatesCar = () => {
+        this.props.fetchCoordinatesCar();
+    }
+
     render(){
+        const list = this.props.list;
         const name = this.props.match.params.name;
-        const item = api.filter(item => item.name === name)[0].items.map((item, index) =>{
-            console.log(item);
-            return(
-                <ul key={index}>
-                    <li>{item.type}</li>
-                    <li>{item.model}</li>
-                    <li style={{color : item.color}}>{item.color}</li>
-                </ul>
-            )
-        });
+        if(list.length>0){
+            const item = list.filter(item => item.name === name)[0].items.map((item, index) =>{
+                return(
+                    <ul key={index}>
+                        <li>{item.type}</li>
+                        <li>{item.model}</li>
+                        <li style={{color : item.color}}>{item.color}</li>
+                        <li>latitude: {item.latitude}, longitude: {item.longitude}
+                        </li>
+                        <li>
+                            <img alt="" style={{width: '100px'}} src={item.image} />
+                        </li>
+                    </ul>
+                )
+            });
 
-        return(
-            <div className="container">
-                <Link to="/auto">
-                    <p>
-                        back
-                    </p>
-                </Link>
-                {item}
-            </div>
-        );
+            return(
+                <div className="container">
+                    <Link to="/auto">
+                        <p>
+                            back
+                        </p>
+                    </Link>
+                    {item}
+                </div>
+            );
+        } else return <div></div>
+
     }
 }
+
+export default connect(
+    (state) => ({list: state.list}),
+    (dispatch) => ({getListCars: () => dispatch(actions.getListCars())}),
+)(AutoItem);
