@@ -10,19 +10,19 @@ const App = () => (
             <h1 className="App-title">Welcome to React</h1>
         </header>
         <div className="container">
-            <ul>
+            <ul className="list-group">
                 <Link to="/auto">
-                    <li>
+                    <li className="list-group-item list-group-item-action">
                         Auto
                     </li>
                 </Link>
                 <Link to="/user">
-                    <li>
+                    <li className="list-group-item list-group-item-action">
                         User
                     </li>
                 </Link>
                 <Link to="/admin">
-                    <li>
+                    <li className="list-group-item list-group-item-action">
                         Admin
                     </li>
                 </Link>
