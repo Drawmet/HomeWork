@@ -17,29 +17,7 @@ class AutoItem extends Component {
         const {list, match} = this.props;
 
         if (list.length > 0) {
-            const item = list.filter(item => item.name === match.params.name)[0].items.map((item, index) => {
-                return (
-                    <ul key={index}>
-                        <li>{item.type}</li>
-                        <li>{item.model}</li>
-                        <li style={{color: item.color}}>{item.color}</li>
-                        <li>latitude: {item.latitude}, longitude: {item.longitude}
-                        </li>
-                        <li>
-                            <img alt="" style={{width: '100px'}} src={item.image}/>
-                        </li>
-                    </ul>
-                )
-            });
-
-            const markers = [{
-                name: "first",
-                location: {
-                    lat: 50.3,
-                    lng: 30.3,
-                },
-                // img: img
-            }];
+            const item = list.find(item => item.name === match.params.name);
 
             return (
                 <div className="container">
@@ -48,8 +26,7 @@ class AutoItem extends Component {
                             back
                         </p>
                     </Link>
-                    {item}
-                    <Maps markers={markers}/>
+                    <Maps markers={item.items}/>
                 </div>
             );
         }
