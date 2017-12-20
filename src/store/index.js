@@ -1,5 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import car from './reducers/carReducer';
+import user from './reducers/userReducer';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import {persistStore, autoRehydrate} from 'redux-persist';
@@ -11,7 +12,8 @@ const middleware =[
 
 const store = createStore(
     combineReducers({
-        car
+        car,
+        user
     }),
     applyMiddleware(...middleware),
     autoRehydrate()

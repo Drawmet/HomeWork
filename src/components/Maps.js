@@ -61,12 +61,12 @@ export class Maps extends Component {
         return (
             <Map
                 google={this.props.google}
-                zoom={11}
+                zoom={14}
                 className={'map'}
                 initialCenter={this.state.position}
                 style={{
                     position: 'relative',
-                    width: '100%',
+                    width: '80%',
                     height: '80%',
                 }}
             >

@@ -17,7 +17,7 @@ export function authorizationUserAction(username, password) {
         payload: {
           err: '',
           username: username,
-          logged: true
+          loggedIn: true
         }
       }
     } else {
@@ -25,7 +25,7 @@ export function authorizationUserAction(username, password) {
         type: ACTION_USER_LOGIN_INCORRECT_PASSWORD,
         payload: {
           err: 'Incorrect Password',
-          logged: false
+          loggedIn: false
         }
       }
     }
@@ -34,7 +34,7 @@ export function authorizationUserAction(username, password) {
     type: ACTION_USER_LOGIN_INCORRECT_USERNAME,
     payload: {
       err: 'Incorrect Username',
-      logged: false
+      loggedIn: false
     }
   }
 }

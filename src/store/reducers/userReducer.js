@@ -1,9 +1,8 @@
 import * as UserActions from '../actions/userActions.js'
-import User from "../../components/User";
 
 const defaultState = {
   err: '',
-  logged: false,
+  loggedIn: false,
 };
 
 export default (state = defaultState, action) => {
