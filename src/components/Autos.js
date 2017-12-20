@@ -17,9 +17,8 @@ const Autos = ({match}) => {
             </li>
         </Link>
     ));
-
     return (
-        <div className="container">
+        <div className="container col-sm-9">
             {/*<Breadcrumbs match={match}/>*/}
             <Link to="/menu">
                 <p className="btn btn-primary">back</p>

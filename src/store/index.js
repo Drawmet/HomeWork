@@ -21,6 +21,6 @@ const store = createStore(
 
 persistStore(store, {
     whitelist: ['car']
-});
+});//.purgeAll();
 
 export default store;

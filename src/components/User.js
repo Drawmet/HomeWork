@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 export default class User extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="col-9">
                 <Link to="/menu">
                     <p className="btn btn-primary">
                         back
