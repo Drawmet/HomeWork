@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import api from '../data/cars';
 
+import Breadcrumbs from './Breadcrumb';
 /**
  *
  */
-const Autos = () => {
+const Autos = ({match}) => {
     const itemsCars = api.map((item, index) => (
         <Link
             key={index}
@@ -16,9 +17,9 @@ const Autos = () => {
             </li>
         </Link>
     ));
-
     return (
-        <div className="container">
+        <div className="container col-sm-9">
+            {/*<Breadcrumbs match={match}/>*/}
             <Link to="/">
                 <p className="btn btn-primary">back</p>
             </Link>
