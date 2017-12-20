@@ -1,14 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
+
 import logo from './logo.svg';
 import './App.css';
 
-const App = () => (
+import Breadcrumbs from './components/Breadcrumb';
+
+const App = ({children, match}) => (
     <div className="App">
         <header className="App-header">
             <img src={logo} className="App-logo" alt="logo"/>
             <h1 className="App-title">Welcome to React</h1>
         </header>
+        <Breadcrumbs match={match}/>
         <div className="container">
             <ul className="list-group">
                 <Link to="/auto">
@@ -27,8 +31,9 @@ const App = () => (
                     </li>
                 </Link>
             </ul>
-        </div>
 
+            {children}
+        </div>
     </div>
 );
 
