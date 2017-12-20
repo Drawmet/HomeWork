@@ -6,16 +6,16 @@ export default class Admin extends Component {
         return (
             <div className="container">
                 <Link to="/">
-                    <p>back</p>
+                    <p className="btn btn-primary">back</p>
                 </Link>
-                <ul>
-                    <li>
+                <ul className="list-group">
+                    <li className="list-group-item">
                         Name: Admin
                     </li>
-                    <li>
+                    <li className="list-group-item">
                         Password: Admin
                     </li>
-                    <li>
+                    <li className="list-group-item">
                         Secret: MyAdmin
                     </li>
                 </ul>

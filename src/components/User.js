@@ -6,18 +6,18 @@ export default class User extends Component {
         return (
             <div className="container">
                 <Link to="/">
-                    <p>
+                    <p className="btn btn-primary">
                         back
                     </p>
                 </Link>
-                <ul>
-                    <li>
+                <ul className="list-group">
+                    <li className="list-group-item">
                         Name: User
                     </li>
-                    <li>
+                    <li className="list-group-item">
                         Age: 18+
                     </li>
-                    <li>
+                    <li className="list-group-item">
                         Work: Front-end Developer
                     </li>
                 </ul>

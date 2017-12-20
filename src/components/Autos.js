@@ -11,7 +11,7 @@ const Autos = () => {
             key={index}
             to={`/auto/${item.name}`}
         >
-            <li>
+            <li className="list-group-item list-group-item-action">
                 {item.name}
             </li>
         </Link>
@@ -20,9 +20,9 @@ const Autos = () => {
     return (
         <div className="container">
             <Link to="/">
-                <p>back</p>
+                <p className="btn btn-primary">back</p>
             </Link>
-            <ul>{itemsCars}</ul>
+            <ul className="list-group">{itemsCars}</ul>
         </div>
     )
 };
