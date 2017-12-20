@@ -46,7 +46,6 @@ export class Maps extends Component {
     }
 
     render() {
-        console.log(this.state.selectedPlace);
         const markersOnMap = this.props.markers.map((item, index) => (
             <Marker
                 key={"marker_" + index}

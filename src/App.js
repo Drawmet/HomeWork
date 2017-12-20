@@ -1,40 +1,61 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {Component} from 'react';
+import {Redirect, Route, Switch} from "react-router-dom";
 
 import logo from './logo.svg';
 import './App.css';
+import Login from "./components/Login";
+import Admin from "./components/Admin";
+import Auto from "./routes/auto";
+import Menu from "./components/Menu";
+import User from "./components/User";
 
-import Breadcrumbs from './components/Breadcrumb';
 
-const App = ({children, match}) => (
-    <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <Breadcrumbs match={match}/>
-        <div className="container">
-            <ul className="list-group">
-                <Link to="/auto">
-                    <li className="list-group-item list-group-item-action">
-                        Auto
-                    </li>
-                </Link>
-                <Link to="/user">
-                    <li className="list-group-item list-group-item-action">
-                        User
-                    </li>
-                </Link>
-                <Link to="/admin">
-                    <li className="list-group-item list-group-item-action">
-                        Admin
-                    </li>
-                </Link>
-            </ul>
-
-            {children}
+class App extends Component {
+    render(){
+        const {loggedIn, authenticationUser} = this.props;
+        console.log(loggedIn);
+        return(
+            <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo"/>
+                    <h1 className="App-title">Welcome to React</h1>
+                </header>
+                <Route exact path="/" render={() => (
+                    loggedIn ? (
+                        <Menu/>
+                    ) : (
+                        <Login loggedIn={loggedIn} authenticationUser={authenticationUser} />
+                    )
+                )}/>
+                <Route path="/menu" render={() => (
+                    loggedIn ? (
+                        <Menu/>
+                    ) : (
+                        <Redirect to="/"/>
+                    )
+                )}/>
+                <Route path="/admin" render={() => (
+                    loggedIn ? (
+                        <Admin/>
+                    ) : (
+                        <Redirect to="/"/>
+                    )
+                )}/>
+                <Route path="/auto" render={() => (
+                    loggedIn ? (
+                        <Auto/>
+                    ) : (
+                        <Redirect to="/"/>
+                    )
+                )}/>
+                <Route path="/user" render={() => (
+                    loggedIn ? (
+                        <User/>
+                    ) : (
+                        <Redirect to="/"/>
+                    )
+                )}/>
         </div>
-    </div>
-);
+)}}
 
 export default App;

@@ -21,7 +21,7 @@ const Autos = ({match}) => {
     return (
         <div className="container">
             {/*<Breadcrumbs match={match}/>*/}
-            <Link to="/">
+            <Link to="/menu">
                 <p className="btn btn-primary">back</p>
             </Link>
             <ul className="list-group">{itemsCars}</ul>

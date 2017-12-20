@@ -5,7 +5,7 @@ export default class Admin extends Component {
     render() {
         return (
             <div className="container">
-                <Link to="/">
+                <Link to="/menu">
                     <p className="btn btn-primary">back</p>
                 </Link>
                 <ul className="list-group">
