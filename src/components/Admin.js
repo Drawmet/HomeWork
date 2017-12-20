@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 export default class Admin extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="col-sm-9">
                 <Link to="/">
                     <p className="btn btn-primary">back</p>
                 </Link>
