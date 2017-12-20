@@ -18,32 +18,40 @@ class AutoItem extends Component {
         const {list, match} = this.props;
 
         if (list.length > 0) {
-            const item1 = list.find(item => item.name === match.params.name);
-            const item = list.find(item => item.name === match.params.name).items.map((item, index) =>{
+            const element = list.find(item => item.name === match.params.name);
+            const item = element.items.map((item, index) =>{
                 return(
-                    <ul key={index}>
-                        <li>{item.type}</li>
-                        <li>{item.model}</li>
-                        <li style={{color : item.color}}>{item.color}</li>
-                        <li>latitude: {item.latitude}, longitude: {item.longitude}
-                        </li>
-                        <li>
-                            <img alt="" style={{width: '100px'}} src={item.image} />
-                        </li>
-                    </ul>
+                    <div className="col-4">
+                        <div className="card" style={{width: '20rem'}} key={index}>
+                            <img className="card-img-top" style={{height: '150px'}} src={item.image} alt=""/>
+                            <div className="card-body">
+                                <h4 className="card-title">{item.type}</h4>
+                            </div>
+                            <ul className="list-group list-group-flush">
+                                <li className="list-group-item">Model: {item.model}</li>
+                                <li className="list-group-item" style={{color : item.color}}>Color: {item.color}</li>
+                                <li className="list-group-item">latitude: {item.latitude}</li>
+                                <li className="list-group-item">longitude: {item.longitude}</li>
+                            </ul>
+                        </div>
+                    </div>
                 )
             });
 
             return (
                 <div className="container">
+
                     <Link to="/auto">
                         <p>
                             back
                         </p>
                     </Link>
-                    {item}
+                    <div className="row">
+                        {item}
+                    </div>
+
                     <CarAddContainer/>
-                    <Maps markers={item1.items}/>
+                    <Maps markers={element.items}/>
                 </div>
             );
         }
