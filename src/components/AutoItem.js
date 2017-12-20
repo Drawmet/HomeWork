@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 // import img from '../assets/auto_icon.png';
 import Maps from '../components/Maps';
+import CarAddContainer from '../containers/CarAddContainer'
 
 /**
  *
@@ -26,6 +27,7 @@ class AutoItem extends Component {
                             back
                         </p>
                     </Link>
+                    <CarAddContainer />
                     <Maps markers={item.items}/>
                 </div>
             );

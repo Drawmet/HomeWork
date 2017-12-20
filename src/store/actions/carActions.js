@@ -23,9 +23,11 @@ export function getListCarsAction() {
  * @param name
  * @param properties
  */
-export function addCarAction(name, properties) {
+
+export function addCarAction(data) {
     return {
-        type: ACTION_CAR_ADD
+        type: ACTION_CAR_ADD,
+        payload: {data}
     }
 }
 
