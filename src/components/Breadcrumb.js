@@ -1,34 +1,6 @@
-import React, {Component} from 'react';
-import {Link, Route, BrowserRouter} from 'react-router-dom';
+import React from 'react';
+import {Link, Route} from 'react-router-dom';
 
-
-// const Breadcrumbs = ({match}) => (
-//     <nav aria-label="breadcrumb" role ="navigation">
-//         <ol className="breadcrumb">
-//             {/*<BreadcrumbsItem match={match}/>*/}
-//             <Route path='/:path' component={BreadcrumbsItem} />
-//
-//
-//         </ol>
-//     </nav>
-// );
-// class BreadcrumbsItem extends Component {
-//     render() {
-//         const {match} = this.props;
-//         console.log(match)
-//         return (
-//             <span>
-//                 <li className="breadcrumb-item">
-//                     <Link to={match.params || '/'}>
-//                         {/*{match.params.path}*/}
-//                         {match.url === '/' ? 'App /' : match.url}
-//                     </Link>
-//                 </li>
-//                 <Route path={`${match.url}/:path`} component={BreadcrumbsItem} />
-//             </span>
-//         )
-//     }
-// }
 const Breadcrumbs = () => (
 
     <nav aria-label="breadcrumb" role ="navigation">
