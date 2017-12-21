@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import { GoogleApiWrapper, Map, Marker, InfoWindow } from 'google-maps-react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {GoogleApiWrapper, InfoWindow, Map, Marker} from 'google-maps-react';
+import {API_KEY} from "../utils/constants";
 
-const API_KEY = 'AIzaSyBlDpfrN6jHhBh74bu1Z6QkD_wlzYgYEeo';
-
+/**
+ *
+ */
 export class Maps extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            showingInfoWindow: false,
-            selectedPlace: {},
-            position: {
-                lat: 50.5,
-                lng : 30.5
-            },
+    state = {
+        showingInfoWindow: false,
+        selectedPlace: {},
+        position: {
+            lat: 50.5,
+            lng: 30.5
         }
-    }
+    };
 
-    markerOnClick = (e) => {
-        const img = this.props.markers.filter(item => item.name === e.name)[0].img;
+    markerOnClick = ({name, position}) => {
+        const car = this.props.markers
+            .find(item => item.type === name);
         this.setState({
             showingInfoWindow: true,
             selectedPlace: {
-                name: e.name,
-                position: e.position,
-                img: img
+                position: position,
+                ...car,
             }
         })
     };
@@ -34,50 +34,66 @@ export class Maps extends Component {
         })
     };
 
-    componentDidMount(){
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((pos) => {
-                this.setState({
-                    position:{
-                        lat: pos.coords.latitude,
-                        lng: pos.coords.longitude,
-                    }
-                });
-            });
+    componentDidMount() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(({coords}) => this.setState({
+                position: {
+                    lat: coords.latitude,
+                    lng: coords.longitude,
+                }
+            }));
         }
     }
 
+    render() {
+        const markersOnMap = this.props.markers.map((item, index) => (
+            <Marker
+                key={"marker_" + index}
+                title={item.type}
+                name={item.type}
+                data={item}
+                position={{lat: item.latitude, lng: item.longitude}}
+                onClick={this.markerOnClick}
+            />
+        ));
 
-
-    render(){
-        const markersOnMap = this.props.markers.map((item, index) => {
-            return (
-                    <Marker title={item.name}
-                        name={item.name}
-                        position={item.location}
-                        key={"marker_" +  index}
-                        onClick={this.markerOnClick}
-                    />
-            )
-        });
         return (
-            <Map google={this.props.google}
-                 zoom={11}
-                 className={'map'}
-                 initialCenter={this.state.position}
-                 style={{width: '100%', height: '80%', position: 'relative'}}
+            <Map
+                google={this.props.google}
+                zoom={14}
+                className={'map'}
+                initialCenter={this.state.position}
+                style={{
+                    position: 'relative',
+                    width: '80%',
+                    height: '80%',
+                }}
             >
                 {markersOnMap}
-                <InfoWindow visible={this.state.showingInfoWindow} onClose={this.infoWindowClose} position={this.state.selectedPlace.position}>
+                <InfoWindow
+                    visible={this.state.showingInfoWindow}
+                    position={this.state.selectedPlace.position}
+                    onClose={this.infoWindowClose}
+                >
                     <div>
-                        <h1>{this.state.selectedPlace.name}</h1>
-                        <img src={this.state.selectedPlace.img} alt={''} width={150} height={100}/>
+                        <h1>{this.state.selectedPlace.type}</h1>
+                        <img
+                            src={this.state.selectedPlace.image}
+                            width={150}
+                            height={100}
+                            alt={''}
+                        />
+                        <p>{this.state.selectedPlace.model}</p>
                     </div>
                 </InfoWindow>
             </Map>
         )
     }
 }
+
+Maps.propTypes = {
+    markers: PropTypes.array.isRequired
+};
 
 export default GoogleApiWrapper({
     apiKey: (API_KEY)

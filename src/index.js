@@ -1,30 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import registerServiceWorker from './registerServiceWorker';
-import Admin from './components/Admin';
-import Autos from './components/Autos';
-import User from './components/User';
-import {Route, Switch} from 'react-router-dom';
-import AutoItem from "./components/AutoItem";
+import {Provider} from 'react-redux';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import store from './store';
 
-const Auto = () => (
-    <Switch>
-        <Route exact path='/auto' component={Autos}/>
-        <Route path='/auto/:name' component={AutoItem}/>
-    </Switch>
-);
+import './index.css';
+import AppContainer from "./containers/AppContainer";
 
 ReactDOM.render((
-    <BrowserRouter>
-        <Switch>
-            <Route exact path='/' component={App}/>
-            <Route path='/auto' component={Auto}/>
-            <Route path='/user' component={User}/>
-            <Route path='/admin' component={Admin}/>
-        </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <Switch>
+                <AppContainer/>
+            </Switch>
+        </BrowserRouter>
+    </Provider>
 ), document.getElementById('root'));
-registerServiceWorker();
