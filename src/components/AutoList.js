@@ -8,10 +8,10 @@ import AddCarContainer from '../containers/CarAddContainer'
  */
 class AutoList extends Component {
     renderRows = () => {
-        return this.props.list.map((mark, mindex) => mark.items.map((car, nindex) => {
+        return this.props.list.map((car) => {
             return (
-                <tr key={`auto_list_row_${mindex}_${nindex}`}>
-                    <td>{mark.name}</td>
+                <tr key={`auto_list_row_${car.id}`}>
+                    <td>{car.mark}</td>
                     <td>{car.type}</td>
                     <td>{car.model}</td>
                     <td>
@@ -41,7 +41,7 @@ class AutoList extends Component {
                     </td>
                 </tr>
             )
-        }));
+        });
     };
 
     componentDidMount() {
@@ -49,7 +49,6 @@ class AutoList extends Component {
     }
 
     render() {
-        console.log(this.props);
         //TODO: Reduce markers
         return (
             <div className="container">
