@@ -1,68 +1,73 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types';
+
+const errStyle = {
+    color: 'red',
+    fontSize: '14'
+};
 
 /**
  *
  */
-
 class Login extends Component {
+    state = {
+        username: '',
+        password: ''
+    };
 
-  state = {
-    username: '',
-    password: ''
-  };
+    render() {
+        return (
+            <div>
+                <div className="col-6 offset-md-3">
+                    <form
+                        className="form"
+                        onSubmit={(e) => {
+                            e.preventDefault();
 
-  handleInputOnChange = ({currentTarget: {id, value}}) => {
-    if(id === 'username')
-      this.setState({
-        username: value
-      });
+                            this.props.authenticationUser(this.state.username, this.state.password);
+                        }}
+                    >
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            id='username'
+                            type='text'
+                            placeholder="Enter username:"
+                            className='form-control'
+                            value={this.state.username}
+                            onChange={({target: {value}}) => this.setState({username: value})}
+                        />
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            id='password'
+                            type='password'
+                            placeholder='Enter password:'
+                            className='form-control'
+                            value={this.state.password}
+                            onChange={({target: {value}}) => this.setState({password: value})}
+                        />
+                        <button
+                            type="submit"
+                            className='btn btn-primary'
+                        >
+                            Submit
+                        </button>
 
-    if(id === 'password')
-      this.setState({
-        password: value
-      })
-  };
-
-  handleLoginClick = () => {
-    this.props.authenticationUser(this.state.username, this.state.password);
-  };
-
-  render(){
-    const errStyle = {color: 'red', fontSize: '14'};
-    return(
-      <div>
-        <label htmlFor="user">Login</label>
-        <input
-              type='text'
-              id='username'
-              placeholder="username"
-              onChange={this.handleInputOnChange}
-              className='form-control'
-        />
-        <label htmlFor="password">Password</label>
-        <input
-              type='password'
-              id='password'
-              placeholder='password'
-              onChange={this.handleInputOnChange}
-              className='form-control'
-        />
-          <button
-                 onClick={this.handleLoginClick}
-                 className='btn btn-outline-secondary'
-          >
-            Submit
-          </button>
-          {this.props.loggedIn ? (<Redirect to='/menu' />) : (<span style={errStyle}>{this.props.err}</span>)}
-      </div>
-    )
-  }
+                        {
+                            this.props.loggedIn
+                                ? (<Redirect to='/menu'/>)
+                                : (<span style={errStyle}>{this.props.err}</span>)
+                        }
+                    </form>
+                </div>
+            </div>
+        )
+    }
 }
 
 Login.propTypes = {
-  loggedIn: PropTypes.bool.isRequired
+    loggedIn: PropTypes.bool.isRequired,
+    err: PropTypes.string
 };
 
 export default Login;

@@ -3,9 +3,9 @@ import car from './reducers/carReducer';
 import user from './reducers/userReducer';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
-import {persistStore, autoRehydrate} from 'redux-persist';
+import {autoRehydrate, persistStore} from 'redux-persist';
 
-const middleware =[
+const middleware = [
     thunk,
     createLogger()
 ];
@@ -20,7 +20,7 @@ const store = createStore(
 );
 
 persistStore(store, {
-    whitelist: ['car']
-});//.purgeAll();
+    whitelist: ['car', 'user']
+})//.purgeAll();
 
 export default store;
