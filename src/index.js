@@ -20,6 +20,7 @@ ReactDOM.render((
                 <Route path='/auto' component={Auto}/>
                 <Route path='/user' component={User}/>
                 <Route path='/admin' component={Admin}/>
+
             </Switch>
         </BrowserRouter>
     </Provider>
