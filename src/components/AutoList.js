@@ -1,60 +1,64 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AddCarContainer from '../containers/CarAddContainer'
 
 /**
  *
  */
 class AutoList extends Component {
-    // const itemsCars = api.map((item, index) => (
-    //     <Link
-    //         key={index}
-    //         to={`/auto/${item.name}`}
-    //     >
-    //         <li className="list-group-item list-group-item-action">
-    //             {item.name}
-    //         </li>
-    //     </Link>
-    // ));
+    renderRows = () => {
+        return this.props.list.map((mark, mindex) => mark.items.map((car, nindex) => {
+            return (
+                <tr key={`auto_list_row_${mindex}_${nindex}`}>
+                    <td>{mark.name}</td>
+                    <td>{car.type}</td>
+                    <td>{car.model}</td>
+                    <td>
+                        <div style={{
+                            display: 'inline-block',
+                            width: 16,
+                            height: 16,
+                            backgroundColor: car.color
+                        }}>
+                        </div>
+                        &nbsp;
+                        {car.color}
+                    </td>
+                    <td style={{width: '1%'}} nowrap="nowrap">
+                        <Link
+                            className="btn btn-sm btn-warning mr-2"
+                            to={`/auto/${car.id}/edit`}
+                        >
+                            <i className="fa fa-fw fa-pencil"></i> edit
+                        </Link>
+                        <Link
+                            className="btn btn-sm btn-info"
+                            to={`/auto/${car.id}/view`}
+                        >
+                            <i className="fa fa-fw fa-eye"></i> view
+                        </Link>
+                    </td>
+                </tr>
+            )
+        }));
+    };
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getListCars();
     }
 
-    renderRows = () => {
-        console.log(this.props)
-        return this.props.list.map((mark, mindex) => mark.items.map((car, nindex) => (
-            <tr key={`auto_list_row_${mindex}_${nindex}`}>
-                <td>{mark.name}</td>
-                <td>{car.type}</td>
-                <td>{car.model}</td>
-                <td>
-                    <div style={{
-                        display: 'inline-block',
-                        width: 16,
-                        height: 16,
-                        backgroundColor: car.color
-                    }}>
-                    </div>
-                    &nbsp;
-                    {car.color}
-                </td>
-                <td>
-                    <button className="btn btn-sm btn-primary">edit</button>
-                    <button className="btn btn-sm btn-secondary">view</button>
-                </td>
-            </tr>
-        )));
-    };
-
     render() {
-
+        console.log(this.props);
         //TODO: Reduce markers
         return (
             <div className="container">
-                <Link to="/">
-                    <p className="btn btn-primary">back</p>
-                </Link>
+                <div className="row justify-content-between">
+                    <Link to="/">
+                        <p className="btn btn-primary">back</p>
+                    </Link>
+                    <AddCarContainer/>
+                </div>
 
                 <table className="table table-striped">
                     <thead>
@@ -63,6 +67,7 @@ class AutoList extends Component {
                         <th>Type</th>
                         <th>Model</th>
                         <th>Color</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -40,7 +40,9 @@ class CarAdd extends Component {
     render() {
         return (
             <div>
-                <button onClick={() => this.setState({show: true})}>Add car</button>
+                <button
+                    className="btn btn-primary"
+                    onClick={() => this.setState({show: true})}>Add car</button>
 
                 {
                     this.state.show &&
@@ -50,20 +52,32 @@ class CarAdd extends Component {
                                 <div className="modal-header">
                                     <h5 className="modal-title">Add Car</h5>
                                 </div>
-                                <div className="modal-body">
-                                    <form>
-                                        <p>Mark</p>
-                                        <input onChange={({target: {value}}) => this.setState({mark: value})}/>
-                                        <p>Model</p>
-                                        <input onChange={({target: {value}}) => this.setState({model: value})}/>
-                                        <p>Year</p>
-                                        <input onChange={({target: {value}}) => this.setState({year: value})}/>
-                                        <p>Photo</p>
-                                        <input onChange={({target: {value}}) => this.setState({image: value})}/>
-                                        <p>Latitude</p>
-                                        <input onChange={({target: {value}}) => this.setState({latitude: value})}/>
-                                        <p>Longitude</p>
-                                        <input onChange={({target: {value}}) => this.setState({longitude: value})}/>
+                                <div className="modal-body offset-md-2">
+                                    <form className="form">
+                                        <label>
+                                            Mark
+                                            <input className='form-control' onChange={({target: {value}}) => this.setState({mark: value})}/>
+                                        </label>
+                                        <label>
+                                            Model
+                                            <input className='form-control' onChange={({target: {value}}) => this.setState({model: value})}/>
+                                        </label>
+                                        <label>
+                                            Year
+                                            <input className='form-control' onChange={({target: {value}}) => this.setState({year: value})}/>
+                                        </label>
+                                        <label>
+                                            Photo
+                                            <input className='form-control' onChange={({target: {value}}) => this.setState({image: value})}/>
+                                        </label>
+                                        <label>
+                                            Latitude
+                                            <input className='form-control' onChange={({target: {value}}) => this.setState({latitude: value})}/>
+                                        </label>
+                                        <label>
+                                            Longitude
+                                            <input className='form-control' onChange={({target: {value}}) => this.setState({longitude: value})}/>
+                                        </label>
                                     </form>
                                 </div>
                                 <div className="modal-footer">
