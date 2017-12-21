@@ -1,3 +1,4 @@
+import uuid from 'uuid';
 import CarList from '../../data/cars';
 
 export const ACTION_CAR_GET_COORDINATES = "ACTION_CAR_GET_COORDINATES";
@@ -13,7 +14,13 @@ export function getListCarsAction() {
     return {
         type: ACTION_CAR_GET_LIST,
         payload: {
-            list: CarList
+            list: CarList.map((brand) => ({
+                ...brand,
+                items: brand.items.map((car) => ({
+                    id: uuid(),
+                    ...car
+                }))
+            }))
         }
     }
 }

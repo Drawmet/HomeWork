@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import img from '../assets/auto_icon.png';
 import Maps from '../components/Maps';
-import CarAddContainer from '../containers/CarAddContainer'
 
 /**
  *
@@ -26,8 +24,8 @@ class AutoItem extends Component {
         const {list, match} = this.props;
 
         if (list.length > 0) {
-            const {items} = list.find(item => item.name === match.params.name);
-
+            console.log(list, match);
+            const {items} = list.find(item => item.id === match.params.carid);
             return (
                 <div className="container">
 
@@ -40,9 +38,7 @@ class AutoItem extends Component {
                         {this.renderItems(items)}
                     </div>
 
-                    <CarAddContainer/>
-
-                    <Maps markers={items}/>
+                    {/*<Maps markers={items}/>*/}
                 </div>
             );
         }

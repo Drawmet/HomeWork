@@ -1,3 +1,4 @@
+import uuid from 'uuid';
 import * as CarActions from '../actions/carActions.js'
 
 const defaultState = {
@@ -22,6 +23,7 @@ export default (state = defaultState, action) => {
             } = action.payload.data;
 
             const car = {
+                id: uuid(),
                 model,
                 year,
                 image,
