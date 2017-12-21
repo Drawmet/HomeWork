@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from 'google-maps-react';
 import {API_KEY} from "../utils/constants";
+import {Link} from "react-router-dom";
 
 /**
  *
@@ -16,9 +17,9 @@ export class Maps extends Component {
         }
     };
 
-    markerOnClick = ({name, position}) => {
+    markerOnClick = ({id, position}) => {
         const car = this.props.markers
-            .find(item => item.type === name);
+            .find(item => item.id === id);
         this.setState({
             showingInfoWindow: true,
             selectedPlace: {
@@ -35,14 +36,14 @@ export class Maps extends Component {
     };
 
     componentDidMount() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(({coords}) => this.setState({
-                position: {
-                    lat: coords.latitude,
-                    lng: coords.longitude,
-                }
-            }));
-        }
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(({coords}) => this.setState({
+        //         position: {
+        //             lat: coords.latitude,
+        //             lng: coords.longitude,
+        //         }
+        //     }));
+        // }
     }
 
     render() {
@@ -51,7 +52,6 @@ export class Maps extends Component {
                 key={"marker_" + index}
                 title={item.type}
                 name={item.type}
-                data={item}
                 position={{lat: item.latitude, lng: item.longitude}}
                 onClick={this.markerOnClick}
             />
@@ -65,7 +65,7 @@ export class Maps extends Component {
                 initialCenter={this.state.position}
                 style={{
                     position: 'relative',
-                    width: '80%',
+                    width: '60%',
                     height: '80%',
                 }}
             >
@@ -77,13 +77,14 @@ export class Maps extends Component {
                 >
                     <div>
                         <h1>{this.state.selectedPlace.type}</h1>
+                        <p>{this.state.selectedPlace.model}</p>
                         <img
                             src={this.state.selectedPlace.image}
                             width={150}
                             height={100}
                             alt={''}
                         />
-                        <p>{this.state.selectedPlace.model}</p>
+                        <Link className='btn btn-info' to={`/auto/:id/view`}/>
                     </div>
                 </InfoWindow>
             </Map>

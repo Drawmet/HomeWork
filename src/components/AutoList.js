@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Maps from "./Maps";
 
 /**
  *
@@ -22,7 +23,6 @@ class AutoList extends Component {
     }
 
     renderRows = () => {
-        console.log(this.props)
         return this.props.list.map((mark, mindex) => mark.items.map((car, nindex) => (
             <tr key={`auto_list_row_${mindex}_${nindex}`}>
                 <td>{mark.name}</td>
@@ -49,7 +49,11 @@ class AutoList extends Component {
 
     render() {
 
-        //TODO: Reduce markers
+        const markers = this.props.list.reduce((acc, list) => {
+            list.items.map((car) => acc.items.push(car));
+            return acc;
+        }).items;
+
         return (
             <div className="container">
                 <Link to="/">
@@ -70,7 +74,7 @@ class AutoList extends Component {
                     </tbody>
                 </table>
 
-                {/*<Maps markers={items}/>*/}
+                <Maps markers={markers}/>
 
                 {/*<ul className="list-group">{itemsCars}</ul>*/}
             </div>
