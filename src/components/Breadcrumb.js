@@ -3,9 +3,8 @@ import {Link, Route} from 'react-router-dom';
 
 const Breadcrumbs = () => (
 
-    <nav aria-label="breadcrumb" role ="navigation">
+    <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
-
             <Route
                 path="*"
                 render={props => {

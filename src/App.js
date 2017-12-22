@@ -10,45 +10,59 @@ import Menu from "./components/Menu";
 import User from "./components/User";
 
 import Breadcrumbs from './components/Breadcrumb';
+import Loader from "./components/Loader";
 
 class App extends Component {
+    state ={
+        rehydrated: false
+    };
+
+    componentDidMount(){
+        setInterval(() => {
+            this.setState({
+                rehydrated: this.props.rehydrated
+            })
+        },500)
+    }
+
+
+
     renderRoutes = () => {
         const {
             loggedIn,
-            authenticationUser
+            authenticationUser,
         } = this.props;
-
-        return (
-            <div className="container">
-                <Route exact path="/" render={() => (
-                    loggedIn ? (
-                        <Menu/>
-                    ) : (
-                        <Login loggedIn={loggedIn} authenticationUser={authenticationUser}/>
-                    )
-                )}/>
-                <Route path="/menu" render={() => (
-                    loggedIn ? (
-                        <Menu/> ) : (
-                        <Redirect to="/"/>))}
-                />
-                <Route path="/admin" render={() => (
-                    loggedIn ? (
-                        <Admin/> ) : (
-                        <Redirect to="/"/>))}
-                />
-                <Route path="/auto" render={() => (
-                    loggedIn ? (
-                        <Auto/> ) : (
-                        <Redirect to="/"/> ))}
-                />
-                <Route path="/user" render={() => (
-                    loggedIn ? (
-                        <User/> ) : (
-                        <Redirect to="/"/> ))}
-                />
-            </div>
-        );
+            return (
+                <div className="container">
+                    <Route exact path="/" render={() => (
+                        loggedIn ? (
+                            <Redirect to="/menu"/>
+                        ) : (
+                            <Login loggedIn={loggedIn} authenticationUser={authenticationUser}/>
+                        )
+                    )}/>
+                    <Route path="/menu" render={() => (
+                        loggedIn ? (
+                            <Menu/> ) : (
+                            <Redirect to="/"/>))}
+                    />
+                    <Route path="/admin" render={() => (
+                        loggedIn ? (
+                            <Admin/> ) : (
+                            <Redirect to="/"/>))}
+                    />
+                    <Route path="/auto" render={() => (
+                        loggedIn ? (
+                            <Auto/> ) : (
+                            <Redirect to="/"/> ))}
+                    />
+                    <Route path="/user" render={() => (
+                        loggedIn ? (
+                            <User/> ) : (
+                            <Redirect to="/"/> ))}
+                    />
+                </div>
+            );
     };
 
     render() {
@@ -58,10 +72,8 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
                     {/*<h1 className="App-title">Welcome to React</h1>*/}
                 </header>
-
                 <Breadcrumbs/>
-
-                {this.renderRoutes()}
+                { this.state.rehydrated ? this.renderRoutes() : <Loader /> }
             </div>
         );
     }

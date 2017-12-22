@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddCarContainer from '../containers/CarAddContainer'
+import Maps from "./Maps";
 
 /**
  *
@@ -49,7 +50,6 @@ class AutoList extends Component {
     }
 
     render() {
-        //TODO: Reduce markers
         return (
             <div className="container">
                 <div className="row justify-content-between">
@@ -74,7 +74,7 @@ class AutoList extends Component {
                     </tbody>
                 </table>
 
-                {/*<Maps markers={items}/>*/}
+                <Maps markers={this.props.list}/>
 
                 {/*<ul className="list-group">{itemsCars}</ul>*/}
             </div>
