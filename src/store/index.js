@@ -4,6 +4,7 @@ import user from './reducers/userReducer';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import {autoRehydrate, persistStore} from 'redux-persist';
+import * as CarActions from "./actions/carActions";
 
 const middleware = [
     thunk,
@@ -21,6 +22,10 @@ const store = createStore(
 
 persistStore(store, {
     whitelist: ['car', 'user']
-}).purgeAll();
+},
+    () => store.getState().car.list.length<1 ?
+        store.dispatch(CarActions.getCarsToStateAction()) :
+            store.getState()
+    )//.purgeAll();
 
 export default store;
