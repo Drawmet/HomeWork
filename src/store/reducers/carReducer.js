@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import * as CarActions from '../actions/carActions.js'
 
 const defaultState = {

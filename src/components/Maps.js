@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from 'google-maps-react';
 import {API_KEY} from "../utils/constants";
-import {Link} from "react-router-dom";
 
 /**
  *
@@ -18,6 +17,7 @@ export class Maps extends Component {
     };
 
     markerOnClick = ({id, position}) => {
+        console.log(id);
         const car = this.props.markers
             .find(item => item.id === id);
         this.setState({
@@ -36,22 +36,24 @@ export class Maps extends Component {
     };
 
     componentDidMount() {
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(({coords}) => this.setState({
-        //         position: {
-        //             lat: coords.latitude,
-        //             lng: coords.longitude,
-        //         }
-        //     }));
-        // }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => this.setState({
+                position: {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                }
+            }));
+        }
     }
 
     render() {
-        const markersOnMap = this.props.markers.map((item, index) => (
+
+        const markersOnMap = this.props.markers.map((item) => (
             <Marker
-                key={"marker_" + index}
+                key={"marker_" + item.id}
                 title={item.type}
                 name={item.type}
+                id={item.id}
                 position={{lat: item.latitude, lng: item.longitude}}
                 onClick={this.markerOnClick}
             />
@@ -76,15 +78,16 @@ export class Maps extends Component {
                     onClose={this.infoWindowClose}
                 >
                     <div>
-                        <h1>{this.state.selectedPlace.type}</h1>
+                        <h1>{`${this.state.selectedPlace.mark} - ${this.state.selectedPlace.type}`}</h1>
                         <p>{this.state.selectedPlace.model}</p>
                         <img
                             src={this.state.selectedPlace.image}
                             width={150}
-                            height={100}
                             alt={''}
                         />
-                        <Link className='btn btn-info' to={`/auto/:id/view`}/>
+                        <a onClick={(e) => e.preventDefault()} className="btn btn-sm btn-info" href={`/auto/${this.state.selectedPlace.id}/view`}>
+                            <i className="fa fa-fw fa-eye"></i> view
+                        </a>
                     </div>
                 </InfoWindow>
             </Map>

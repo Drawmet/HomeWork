@@ -22,7 +22,7 @@ class App extends Component {
             <div className="container">
                 <Route exact path="/" render={() => (
                     loggedIn ? (
-                        <Menu/>
+                        <Redirect to="/menu"/>
                     ) : (
                         <Login loggedIn={loggedIn} authenticationUser={authenticationUser}/>
                     )
