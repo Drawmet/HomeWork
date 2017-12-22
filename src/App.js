@@ -26,11 +26,11 @@ class App extends Component {
     }
 
 
-
     renderRoutes = () => {
         const {
             loggedIn,
             authenticationUser,
+            err
         } = this.props;
             return (
                 <div className="container">
@@ -38,7 +38,11 @@ class App extends Component {
                         loggedIn ? (
                             <Redirect to="/menu"/>
                         ) : (
-                            <Login loggedIn={loggedIn} authenticationUser={authenticationUser}/>
+                            <Login
+                                loggedIn={loggedIn}
+                                authenticationUser={authenticationUser}
+                                err={err}
+                            />
                         )
                     )}/>
                     <Route path="/menu" render={() => (
@@ -71,6 +75,13 @@ class App extends Component {
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                     {/*<h1 className="App-title">Welcome to React</h1>*/}
+                    <button
+                        className='btn btn-danger'
+                        onClick={() => this.props.logoutUser()}
+                        disabled={!this.props.loggedIn}
+                    >
+                        Log out
+                    </button>
                 </header>
                 <Breadcrumbs/>
                 { this.state.rehydrated ? this.renderRoutes() : <Loader /> }
