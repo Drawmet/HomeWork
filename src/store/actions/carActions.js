@@ -4,16 +4,17 @@ import CarList from '../../data/cars';
 export const ACTION_CAR_ADD = "ACTION_CAR_ADD";
 export const ACTION_CAR_EDIT = "ACTION_CAR_EDIT";
 export const ACTION_CAR_DELETE = "ACTION_CAR_DELETE";
+export const ACTION_CAR_GET = "ACTION_CAR_GET";
 export const ACTION_CAR_GET_LIST = "ACTION_CAR_GET_LIST";
 export const ACTION_CAR_GET_NORMALIZE_LIST = "ACTION_CAR_GET_NORMALIZE_LIST";
 export const ACTION_CAR_GET_BY_ID = "ACTION_CAR_GET_BY_ID";
 
 /**
- * Get prepared list of cars.
+ * Get prepared list of cars to state.
  */
-export function getListCarsAction() {
+export function getCarsToStateAction() {
     return {
-        type: ACTION_CAR_GET_LIST,
+        type: ACTION_CAR_GET,
         payload: {
             list: CarList.reduce((acc, mark) => ([
                 ...acc,
@@ -24,6 +25,21 @@ export function getListCarsAction() {
                 }))
             ]), [])
         }
+    }
+}
+
+/**
+ * Get prepared list of cars to table.
+ */
+export function getListCarsAction() {
+    return (dispatch, getState) => {
+        const currState = getState();
+        return dispatch({
+            type: ACTION_CAR_GET_LIST,
+            payload: {
+                ...currState.car
+            }
+        })
     }
 }
 
@@ -47,9 +63,14 @@ export function getCarsByIdAction(id) {
             }))
         ]), []);
 
-        console.log(carList);
+        const car = carList.find(item => item.id === id)
 
-
+        return {
+            type: ACTION_CAR_GET_BY_ID,
+            payload:{
+                ...car
+            }
+        }
         // const NormalizeList = [];
         //
         // getState().car.list.forEach(
@@ -101,10 +122,18 @@ export function addCarAction(data) {
  * @param name
  * @param properties
  */
-export function editCarAction(name, properties) {
-    return {
-        type: ACTION_CAR_EDIT
-    }
+export function editCarAction(car) {
+    return (dispatch, getState) => {
+        const cars  = getState().car.list.map((item) => item.id === car.id ? car : item);
+        return dispatch({
+            type: ACTION_CAR_EDIT,
+            payload: {
+                list: [
+                    ...cars
+                ]
+            }
+        })
+    };
 }
 
 /**
