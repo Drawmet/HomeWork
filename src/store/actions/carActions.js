@@ -49,27 +49,7 @@ export function getListCarsAction() {
  * @param properties
  */
 
-export function getNormalizeListCarsAction() {
-    return (dispatch, getState) => {
-        const NormalizeList = [];
 
-        getState().car.list.forEach((item) => {
-            item.items.map((car) =>
-                NormalizeList.push({
-                    ...car,
-                    name: item.name
-                }));
-            return item.items;
-        });
-
-        return {
-            type: ACTION_CAR_GET_NORMALIZE_LIST,
-            payload: {
-                NormalizeList
-            }
-        };
-    };
-}
 
 export function getCarsByIdAction(id) {
     return (dispatch, getState) => {

@@ -2,31 +2,14 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddCarContainer from '../containers/CarAddContainer'
-import Pagination from "./Pagination";
-import {CARS_PER_PAGE} from "../utils/constants";
+import Maps from "./Maps";
 
 /**
  *
  */
 class AutoList extends Component {
-    state = {
-        currentPage: 1,
-        carsPerPage: CARS_PER_PAGE
-    };
-
-    getCurrentPage = (currentPage) => {
-        this.setState({
-         currentPage: currentPage
-        });
-    };
-
-
     renderRows = () => {
-        const {currentPage, carsPerPage} = this.state;
-        const indexOfLastCars = currentPage * carsPerPage;
-        const indexOfFirstCars = indexOfLastCars - carsPerPage;
-        const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
-        return currentCars.map((car) => {
+        return this.props.list.map((car) => {
             return (
                 <tr key={`auto_list_row_${car.id}`}>
                     <td>{car.mark}</td>
@@ -67,11 +50,6 @@ class AutoList extends Component {
     }
 
     render() {
-
-        //TODO: Reduce markers
-
-        const {currentPage, carsPerPage} = this.state;
-
         return (
             <div className="container">
                 <div className="row justify-content-between">
@@ -92,23 +70,13 @@ class AutoList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-
                     {this.renderRows()}
-
                     </tbody>
                 </table>
-                <div className="row">
-                    {/*{renderPageNumbers}*/}
-                <Pagination
-                    list={this.props.list}
-                    currentPage={currentPage}
-                    carsPerPage={carsPerPage}
-                    onChange={this.getCurrentPage}
-                />
-                </div>
 
-                {/*<Maps markers={items}/>*/}
+                <Maps markers={this.props.list}/>
 
+                {/*<ul className="list-group">{itemsCars}</ul>*/}
             </div>
         );
     }

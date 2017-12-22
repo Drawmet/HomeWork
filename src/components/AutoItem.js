@@ -29,7 +29,7 @@ class AutoItem extends Component {
                 {/*</div>*/}
 
                 <AutoItemCard item={car} />
-                {/*<Maps markers={items}/>*/}
+                <Maps markers={[car]} initialCenter={{lat: car.latitude, lng: car.longitude}}/>
             </div>
         );
     }

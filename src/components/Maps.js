@@ -16,9 +16,10 @@ export class Maps extends Component {
         }
     };
 
-    markerOnClick = ({name, position}) => {
+    markerOnClick = ({id, position}) => {
+        console.log(id);
         const car = this.props.markers
-            .find(item => item.type === name);
+            .find(item => item.id === id);
         this.setState({
             showingInfoWindow: true,
             selectedPlace: {
@@ -36,22 +37,32 @@ export class Maps extends Component {
 
     componentDidMount() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(({coords}) => this.setState({
+            navigator.geolocation.getCurrentPosition((pos) => this.setState({
                 position: {
-                    lat: coords.latitude,
-                    lng: coords.longitude,
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
                 }
             }));
+        }
+        if(this.props.initialCenter){
+            const {initialCenter:{lat, lng}} = this.props;
+            this.setState({
+                position: {
+                    lat: lat,
+                    lng: lng
+                }
+            })
         }
     }
 
     render() {
-        const markersOnMap = this.props.markers.map((item, index) => (
+
+        const markersOnMap = this.props.markers.map((item) => (
             <Marker
-                key={"marker_" + index}
+                key={"marker_" + item.id}
                 title={item.type}
                 name={item.type}
-                data={item}
+                id={item.id}
                 position={{lat: item.latitude, lng: item.longitude}}
                 onClick={this.markerOnClick}
             />
@@ -60,12 +71,12 @@ export class Maps extends Component {
         return (
             <Map
                 google={this.props.google}
-                zoom={14}
+                zoom={12}
                 className={'map'}
                 initialCenter={this.state.position}
                 style={{
                     position: 'relative',
-                    width: '80%',
+                    width: '60%',
                     height: '80%',
                 }}
             >
@@ -76,14 +87,16 @@ export class Maps extends Component {
                     onClose={this.infoWindowClose}
                 >
                     <div>
-                        <h1>{this.state.selectedPlace.type}</h1>
+                        <h1>{`${this.state.selectedPlace.mark} - ${this.state.selectedPlace.type}`}</h1>
+                        <p>{this.state.selectedPlace.model}</p>
                         <img
                             src={this.state.selectedPlace.image}
                             width={150}
-                            height={100}
                             alt={''}
                         />
-                        <p>{this.state.selectedPlace.model}</p>
+                        <a onClick={(e) => e.preventDefault()} className="btn btn-sm btn-info" href={`/auto/${this.state.selectedPlace.id}/view`}>
+                            <i className="fa fa-fw fa-eye"></i> view
+                        </a>
                     </div>
                 </InfoWindow>
             </Map>
