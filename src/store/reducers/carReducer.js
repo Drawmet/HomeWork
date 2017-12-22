@@ -1,7 +1,9 @@
+import uuid from 'uuid';
 import * as CarActions from '../actions/carActions.js'
 
 const defaultState = {
-    list: []
+    list: [],
+    selected: null
 };
 
 export default (state = defaultState, action) => {
@@ -12,57 +14,20 @@ export default (state = defaultState, action) => {
                 ...action.payload
             };
         case CarActions.ACTION_CAR_ADD:
-            const {
-                mark,
-                model,
-                year,
-                image,
-                latitude,
-                longitude
-            } = action.payload.data;
-
-            const car = {
-                model,
-                year,
-                image,
-                latitude,
-                longitude
-            };
-
-            const brand = state.list.find((brand) => brand.name === mark);
-
-            if (brand) {
-                const updatedBrand = {
-                    ...brand,
-                    items: [
-                        ...brand.items,
-                        car
-                    ]
-                };
-
-                return {
-                    ...state,
-                    list: state.list.map((item) => {
-                        if (item === brand) {
-                            return updatedBrand;
-                        }
-
-                        return item;
-                    })
-                };
-            }
-
             return {
                 ...state,
                 list: [
                     ...state.list,
-                    {
-                        name: mark,
-                        items: [
-                            car
-                        ]
-                    }
+                    ...action.payload
                 ]
+            };
+        case CarActions.ACTION_CAR_GET_NORMALIZE_LIST:
+            return {
+                ...action.payload
+            };
+        case CarActions.ACTION_CAR_GET_BY_ID:
+            return {
+                ...action.payload
             };
         case CarActions.ACTION_CAR_EDIT:
             return {

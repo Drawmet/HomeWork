@@ -1,53 +1,37 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import img from '../assets/auto_icon.png';
 import Maps from '../components/Maps';
-import CarAddContainer from '../containers/CarAddContainer'
 
 /**
  *
  */
 class AutoItem extends Component {
-    renderItems = (items) => {
-        return items.map((item, index) => (
-            <AutoItemCard
-                key={`auto_item_${index}`}
-                item={item}
-            />
-        ));
-    };
-
-    componentDidMount() {
-        this.props.getListCars();
-    }
-
     render() {
-        const {list, match} = this.props;
+        const {list, match: {params: {carid}}} = this.props;
 
-        if (list.length > 0) {
-            const {items} = list.find(item => item.name === match.params.name);
+        const car = list.find((car) => car.id === carid);
 
-            return (
-                <div className="container">
+        return (
+            <div className="container">
+                <Link to="/auto">
+                    <p>
+                        back
+                    </p>
+                </Link>
+                {/*<div className="row">*/}
+                    {/*{car.id}*/}
+                    {/*{car.mark}*/}
+                    {/*{car.model}*/}
+                    {/*{car.type}*/}
+                    {/*{car.color}*/}
+                    {/*<img src={car.image} alt={`${car.mark} - ${car.model}`} />*/}
+                {/*</div>*/}
 
-                    <Link to="/auto">
-                        <p>
-                            back
-                        </p>
-                    </Link>
-                    <div className="row">
-                        {this.renderItems(items)}
-                    </div>
-
-                    <CarAddContainer/>
-
-                    <Maps markers={items}/>
-                </div>
-            );
-        }
-
-        return (<div></div>);
+                <AutoItemCard item={car} />
+                {/*<Maps markers={items}/>*/}
+            </div>
+        );
     }
 }
 
@@ -64,10 +48,10 @@ const AutoItemCard = ({item}) => (
         <div className="card" style={{width: '20rem'}}>
             <img className="card-img-top" style={{height: '150px'}} src={item.image} alt=""/>
             <div className="card-body">
-                <h4 className="card-title">{item.type}</h4>
+                <h4 className="card-title">{item.mark} - {item.model}</h4>
             </div>
             <ul className="list-group list-group-flush">
-                <li className="list-group-item">Model: {item.model}</li>
+                <li className="list-group-item">Type: {item.type}</li>
                 <li className="list-group-item" style={{color: item.color}}>Color: {item.color}</li>
                 <li className="list-group-item">latitude: {item.latitude}</li>
                 <li className="list-group-item">longitude: {item.longitude}</li>
