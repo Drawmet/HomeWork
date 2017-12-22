@@ -3,10 +3,11 @@ import loader from '../assets/Loading_icon.gif';
 
 const Loader = () => (
     <div className="loader">
-        <img
-            src={loader}
-            alt='Loading...'
-        />
+        <p className='lead'>Loading...</p>
+        {/*<img*/}
+            {/*src={loader}*/}
+            {/*alt='Loading...'*/}
+        {/*/>*/}
     </div>
 );
 
