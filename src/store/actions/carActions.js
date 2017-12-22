@@ -63,7 +63,7 @@ export function getCarsByIdAction(id) {
             }))
         ]), []);
 
-        const car = carList.find(item => item.id === id)
+        const car = carList.find(item => item.id === id);
 
         return {
             type: ACTION_CAR_GET_BY_ID,

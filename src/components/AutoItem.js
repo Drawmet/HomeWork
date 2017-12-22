@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Pagination from '../components/Pagination'
 import Maps from '../components/Maps';
 
 /**
@@ -19,14 +20,6 @@ class AutoItem extends Component {
                         back
                     </p>
                 </Link>
-                {/*<div className="row">*/}
-                    {/*{car.id}*/}
-                    {/*{car.mark}*/}
-                    {/*{car.model}*/}
-                    {/*{car.type}*/}
-                    {/*{car.color}*/}
-                    {/*<img src={car.image} alt={`${car.mark} - ${car.model}`} />*/}
-                {/*</div>*/}
 
                 <AutoItemCard item={car} />
                 <Maps markers={[car]} initialCenter={{lat: car.latitude, lng: car.longitude}}/>
@@ -34,11 +27,6 @@ class AutoItem extends Component {
         );
     }
 }
-
-AutoItem.propTypes = {
-    list: PropTypes.array.isRequired,
-    match: PropTypes.any
-};
 
 /**
  *
@@ -59,5 +47,11 @@ const AutoItemCard = ({item}) => (
         </div>
     </div>
 );
+
+AutoItem.propTypes = {
+    list: PropTypes.array.isRequired,
+    match: PropTypes.any
+};
+
 
 export default AutoItem;
