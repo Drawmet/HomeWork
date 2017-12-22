@@ -4,6 +4,7 @@ import user from './reducers/userReducer';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import {autoRehydrate, persistStore} from 'redux-persist';
+import * as CarActions from "./actions/carActions";
 
 const middleware = [
     thunk,
