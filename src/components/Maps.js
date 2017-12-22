@@ -17,7 +17,6 @@ export class Maps extends Component {
     };
 
     markerOnClick = ({id, position}) => {
-        console.log(id);
         const car = this.props.markers
             .find(item => item.id === id);
         this.setState({

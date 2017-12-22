@@ -9,8 +9,13 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     authenticationUser: (username, password) => {
         dispatch(UserActions.authorizationUserAction(username, password));
+    },
+    logoutUser: () => {
+        dispatch(UserActions.logoutUserAction());
     }
 });
+
+
 
 export default connect(
     mapStateToProps,

@@ -37,6 +37,12 @@ export default (state = defaultState, action) => {
                 ...action.payload,
                 rehydrated: state.rehydrated
             };
+        case UserActions.ACTION_USER_LOGIN_OUT:
+            return {
+                ...state.user,
+                ...action.payload,
+                rehydrated: state.rehydrated
+            };
         case REHYDRATE:
             return {
                 ...state.user,
