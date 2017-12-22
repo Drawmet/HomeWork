@@ -44,6 +44,15 @@ export class Maps extends Component {
                 }
             }));
         }
+        if(this.props.initialCenter){
+            const {initialCenter:{lat, lng}} = this.props;
+            this.setState({
+                position: {
+                    lat: lat,
+                    lng: lng
+                }
+            })
+        }
     }
 
     render() {
@@ -62,7 +71,7 @@ export class Maps extends Component {
         return (
             <Map
                 google={this.props.google}
-                zoom={14}
+                zoom={12}
                 className={'map'}
                 initialCenter={this.state.position}
                 style={{

@@ -39,3 +39,15 @@ export function authorizationUserAction(username, password) {
         }
     }
 }
+
+export function checkAuthorizationAction() {
+    return (dispatch, getState) => {
+        const currState = getState();
+        return dispatch({
+            type: ACTION_USER_LOGIN_CHECK,
+            payload: {
+                ...currState.user
+            }
+        })
+    }
+}
