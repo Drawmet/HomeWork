@@ -4,6 +4,7 @@ export const ACTION_USER_LOGIN_CORRECT = "ACTION_USER_LOGIN_CORRECT";
 export const ACTION_USER_LOGIN_INCORRECT_USERNAME = "ACTION_USER_LOGIN_INCORRECT_USERNAME";
 export const ACTION_USER_LOGIN_INCORRECT_PASSWORD = "ACTION_USER_LOGIN_INCORRECT_PASSWORD";
 export const ACTION_USER_LOGIN_CHECK = "ACTION_USER_LOGIN_CHECK";
+export const ACTION_USER_LOGIN_OUT = "ACTION_USER_LOGIN_OUT";
 
 /**
  * Get result authorization of users.
@@ -40,11 +41,23 @@ export function authorizationUserAction(username, password) {
     }
 }
 
+export function logoutUserAction() {
+    return (dispatch, getState) => {
+        return dispatch({
+            type: ACTION_USER_LOGIN_CHECK,
+            payload: {
+                err: '',
+                loggedIn: false
+            }
+        })
+    }
+}
+
 export function checkAuthorizationAction() {
     return (dispatch, getState) => {
         const currState = getState();
         return dispatch({
-            type: ACTION_USER_LOGIN_CHECK,
+            type: ACTION_USER_LOGIN_OUT,
             payload: {
                 ...currState.user
             }
