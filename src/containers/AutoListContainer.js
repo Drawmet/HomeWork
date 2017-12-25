@@ -7,9 +7,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getListCars: () => {
-        dispatch(CarActions.getListCarsAction());
-    }
 });
 
 export default connect(

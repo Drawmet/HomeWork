@@ -6,20 +6,18 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-        case CarActions.ACTION_CAR_GET:
-            console.log(action.payload, state);
+        case CarActions.ACTION_CAR_INITIALIZE:
             return {
                 ...state,
                 ...action.payload
             };
-        case CarActions.ACTION_CAR_GET_LIST:
-            return {
-                ...action.payload
-            };
         case CarActions.ACTION_CAR_ADD:
             return {
-                // ...state,
-                // list: action.payload.coordinates
+                ...state,
+                list: [
+                    ...state.list,
+                    action.payload
+                ]
             };
         case CarActions.ACTION_CAR_EDIT:
             return {
@@ -28,7 +26,7 @@ export default (state = defaultState, action) => {
             };
         case CarActions.ACTION_CAR_DELETE:
             return {
-                // ...state,
+                ...state,
                 // list: action.payload.coordinates
             };
         default:

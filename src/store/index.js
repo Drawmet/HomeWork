@@ -23,7 +23,7 @@ const store = createStore(
 persistStore(store, {
     whitelist: ['car', 'user']
 }, () => {
-    if (store.getState().car.list.length < 1) {
+    if (!store.getState().car.list.length) {
         store.dispatch(CarActions.getCarsToStateAction());
     }
 });//.purgeAll();
