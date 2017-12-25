@@ -24,7 +24,7 @@ class Pagination extends Component {
                     className={number === this.props.currentPage ? "page-item active" : "page-item"}
                     onClick={() => this.props.onPage(number)}
                 >
-                    <a className="page-link" href="#">
+                    <a className="page-link">
                         {number}
                     </a>
                 </li>
@@ -43,7 +43,7 @@ class Pagination extends Component {
                                 className={this.props.currentPage === 1 ? 'page-item disabled' : 'page-item'}
                                 onClick={this.props.onPrev}
                             >
-                                <a className="page-link" href="#" tabIndex="-1">
+                                <a className="page-link" tabIndex="-1">
                                     <i className="fa fa-fw  fa-angle-double-left"></i>
                                 </a>
                             </li>
@@ -52,7 +52,7 @@ class Pagination extends Component {
                                 className={this.props.currentPage === this.props.totalPages ? 'page-item disabled' : 'page-item'}
                                 onClick={this.props.onNext}
                             >
-                                <a className="page-link" href="#">
+                                <a className="page-link" >
                                     <i className="fa fa-fw  fa-angle-double-right"></i>
                                 </a>
                             </li>

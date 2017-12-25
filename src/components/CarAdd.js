@@ -137,6 +137,7 @@ class CarAdd extends Component {
                         <input
                             id='new-lat'
                             className='form-control'
+                            value={this.state.latitude}
                             onChange={({target: {value}}) => this.setState({latitude: value})}
                         />
                     </div>
@@ -145,6 +146,7 @@ class CarAdd extends Component {
                         <input
                             id='new-lng'
                             className='form-control'
+                            value={this.state.longitude}
                             onChange={({target: {value}}) => this.setState({longitude: value})}
                         />
                     </div>
