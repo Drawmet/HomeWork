@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import * as CarActions from '../store/actions/carActions';
+// import * as CarActions from '../store/actions/carActions';
 import AutoList from "../components/AutoList";
 
 const mapStateToProps = (state) => ({

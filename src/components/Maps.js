@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {GoogleApiWrapper, InfoWindow, Map, Marker} from 'google-maps-react';
-import {API_KEY} from "../utils/constants";
+import {
+    GoogleApiWrapper, InfoWindow, Map, Marker
+} from 'google-maps-react';
+import { API_KEY } from "../utils/constants";
 
 /**
  *
@@ -13,17 +15,40 @@ export class Maps extends Component {
         position: {
             lat: 50.5,
             lng: 30.5
-        }
+        },
+        type: this.props.type,
+        newMarker: {
+            changed: false,
+            position: {
+                lat: this.props.markers.latitude,
+                lng: this.props.markers.longitude
+            },
+        },
     };
 
-    markerOnClick = ({id, position}) => {
-        const car = this.props.markers
-            .find(item => item.id === id);
+    onMapClick = (mapProps, map, clickEvent) => {
+        if (this.state.type && this.state.type !== 'show') {
+            this.props.getPositionOnMap(clickEvent.latLng.toJSON());
+            this.setState({
+                newMarker: {
+                    changed: true,
+                    position: clickEvent.latLng.toJSON()
+                }
+            })
+        }
+    }
+
+    fetchPlaces = ({ google }, map) => {
+    }
+
+    markerOnClick = ({ id, position }) => {
+        const markers = this.props.markers
+            .find(markers => markers.id === id);
         this.setState({
             showingInfoWindow: true,
             selectedPlace: {
                 position: position,
-                ...car,
+                ...markers,
             }
         })
     };
@@ -43,8 +68,8 @@ export class Maps extends Component {
                 }
             }));
         }
-        if(this.props.initialCenter){
-            const {initialCenter:{lat, lng}} = this.props;
+        if (this.props.initialCenter) {
+            const { initialCenter: { lat, lng } } = this.props;
             this.setState({
                 position: {
                     lat: lat,
@@ -54,21 +79,51 @@ export class Maps extends Component {
         }
     }
 
-    render() {
+    markersOnMap = () => {
+        const markers = this.props.markers;
+        switch (this.props.type) {
+            case 'add':
+                return (
+                    <Marker
+                        onClick={this.markerOnClick}
+                        key={"marker_" + markers.id}
+                        title={markers.type}
+                        name={markers.type}
+                        id={markers.id}
+                        position={this.state.newMarker.position}
+                    />
+                )
+            case 'edit':
+                return (
+                    <Marker
+                        onClick={this.markerOnClick}
+                        key={"marker_" + markers.id}
+                        title={markers.type}
+                        name={markers.type}
+                        id={markers.id}
+                        position={this.state.newMarker.changed ? this.state.newMarker.position : { lat: markers.latitude, lng: markers.longitude }}
+                    />
+                )
+            default:
+                return markers.map((car) => (
+                    <Marker
+                        onClick={this.markerOnClick}
+                        key={"marker_" + car.id}
+                        title={car.type}
+                        name={car.type}
+                        id={car.id}
+                        position={{ lat: car.latitude, lng: car.longitude }}
+                    />
+                ))
+        }
+    }
 
-        const markersOnMap = this.props.markers.map((item) => (
-            <Marker
-                key={"marker_" + item.id}
-                title={item.type}
-                name={item.type}
-                id={item.id}
-                position={{lat: item.latitude, lng: item.longitude}}
-                onClick={this.markerOnClick}
-            />
-        ));
+    render() {
 
         return (
             <Map
+                onReady={this.fetchPlaces}
+                onClick={this.onMapClick}
                 google={this.props.google}
                 zoom={12}
                 className={'map'}
@@ -79,7 +134,7 @@ export class Maps extends Component {
                     height: '80%',
                 }}
             >
-                {markersOnMap}
+                {this.markersOnMap()}
                 <InfoWindow
                     visible={this.state.showingInfoWindow}
                     position={this.state.selectedPlace.position}
@@ -93,7 +148,7 @@ export class Maps extends Component {
                             width={150}
                             alt={''}
                         />
-                        <a onClick={(e) => e.preventDefault()} className="btn btn-sm btn-info" href={`/auto/${this.state.selectedPlace.id}/view`}>
+                        <a className="btn btn-sm btn-info" href={`/auto/${this.state.selectedPlace.id}/view`}>
                             <i className="fa fa-fw fa-eye"></i> view
                         </a>
                     </div>
@@ -104,7 +159,13 @@ export class Maps extends Component {
 }
 
 Maps.propTypes = {
-    markers: PropTypes.array.isRequired
+    markers: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    initialCenter: PropTypes.objectOf({
+        lat: PropTypes.string,
+        lng: PropTypes.string
+    }),
+    type: PropTypes.string,
+    getPositionOnMap: PropTypes.func
 };
 
 export default GoogleApiWrapper({

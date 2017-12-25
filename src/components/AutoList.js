@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Maps from "./Maps";
 
-import AddCarContainer from '../containers/CarAddContainer'
 import Pagination from "./Pagination";
 import {CARS_PER_PAGE} from "../utils/constants";
 
@@ -101,7 +100,7 @@ class AutoList extends Component {
                     />
                 </div>
 
-                <Maps markers={this.props.list}/>
+                <Maps markers={this.props.list} type={'show'}/>
             </div>
         );
     }

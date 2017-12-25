@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
-import Maps from '../components/Maps';
+import Maps from './Maps';
 
 
 class AutoEdit extends Component {
@@ -21,6 +21,13 @@ class AutoEdit extends Component {
             ...this.state
         })
 
+    };
+
+    getPositionOnMap = ({lat, lng}) => {
+        this.setState({
+            latitude: lat,
+            longitude: lng
+        })
     };
 
     renderDropzoneContent = () => {
@@ -153,6 +160,7 @@ class AutoEdit extends Component {
                             </Link>
                         </div>
                     </form>
+                    <Maps markers={item} type='edit' getPositionOnMap={this.getPositionOnMap}/>
                 {/*</div>*/}
             </div>
 
