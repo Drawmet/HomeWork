@@ -60,12 +60,7 @@ class AutoList extends Component {
         });
     };
 
-    componentDidMount() {
-        this.props.getListCars();
-    }
-
     render() {
-
         return (
             <div className="container">
                 <div className="row justify-content-between">
@@ -96,7 +91,7 @@ class AutoList extends Component {
                         onPrev={() => this.setState({
                             currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1
                         })}
-                        onPage={(number) => this.setState({ currentPage: number })}
+                        onPage={(number) => this.setState({currentPage: number})}
                         onNext={() => this.setState({
                             currentPage: this.state.currentPage < this.state.totalPages ? this.state.currentPage + 1 : this.state.totalPages
                         })}
