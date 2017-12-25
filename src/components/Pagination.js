@@ -1,49 +1,76 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {CARS_PER_PAGE} from "../utils/constants";
 
 class Pagination extends Component {
+    renderPageNumbers = () => {
+        const {
+            list,
+            elementsPerPage
+        } = this.props;
 
-    handleClick = (event) => {
-        let page = event.target.id;
-        const {onChange} = this.props;
-        this.setState({
-            currentPage: +page
-        });
-        onChange(page);
-
-    };
-
-    render() {
-        console.log(this.state);
-        const {list, carsPerPage} = this.props;
         const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(list.length / carsPerPage); i++) {
+
+        for (let i = 1; i <= Math.ceil(list.length / elementsPerPage); i++) {
             pageNumbers.push(i);
         }
 
-        const renderPageNumbers = pageNumbers.map(number => {
-            return (
-                <nav>
-                    <ul className="pagination">
-                        <li className="page-item page-link"
-                            key={number}
-                            id={number}
-                            onClick={this.handleClick}>
-                            {number}
-                        </li>
-                    </ul>
-                </nav>
-            )
-        });
+        return (
+            pageNumbers.map((number) => (
+                <li
+                    key={number}
+                    id={number}
+                    className="page-item page-link"
+                    onClick={() => this.props.onPage(number)}
+                >
+                    {number}
+                </li>
+            ))
+        );
+    };
 
+    render() {
         return (
             <div>
                 <div className="row">
-                    {renderPageNumbers}
+                    <nav>
+                        <ul className="pagination">
+                            <li
+                                className="page-item page-link"
+                                onClick={this.props.onPrev}
+                            >&lt; Prev</li>
+                            {this.renderPageNumbers()}
+                            <li
+                                className="page-item page-link"
+                                onClick={this.props.onNext}
+                            >Next &gt;</li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         );
     }
 }
+
+Pagination.propTypes = {
+    list: PropTypes.array.isRequired,
+    currentPage: PropTypes.number,
+    elementsPerPage: PropTypes.number,
+    onPrev: PropTypes.func,
+    onNext: PropTypes.func,
+    onPage: PropTypes.func
+};
+
+Pagination.defaultProps = {
+    currentPage: 1,
+    elementsPerPage: CARS_PER_PAGE,
+    onPrev: () => {
+    },
+    onNext: () => {
+    },
+    onPage: () => {
+    }
+};
 
 
 export default Pagination;

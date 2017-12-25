@@ -1,32 +1,39 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Pagination from '../components/Pagination'
 import Maps from '../components/Maps';
 
 /**
  *
  */
-class AutoItem extends Component {
-    render() {
-        const {list, match: {params: {carid}}} = this.props;
+const AutoItem = ({list, match: {params: {carid}}}) => {
+    const car = list.find((car) => car.id === carid);
 
-        const car = list.find((car) => car.id === carid);
+    return (
+        <div className="container">
+            <Link to="/auto">
+                <p>
+                    back
+                </p>
+            </Link>
 
-        return (
-            <div className="container">
-                <Link to="/auto">
-                    <p>
-                        back
-                    </p>
-                </Link>
+            <AutoItemCard item={car}/>
 
-                <AutoItemCard item={car} />
-                <Maps markers={[car]} initialCenter={{lat: car.latitude, lng: car.longitude}}/>
-            </div>
-        );
-    }
-}
+            <Maps
+                markers={[car]}
+                initialCenter={{
+                    lat: car.latitude,
+                    lng: car.longitude
+                }}
+            />
+        </div>
+    );
+};
+
+AutoItem.propTypes = {
+    list: PropTypes.array.isRequired,
+    match: PropTypes.any.isRequired
+};
 
 /**
  *
@@ -48,10 +55,11 @@ const AutoItemCard = ({item}) => (
     </div>
 );
 
-AutoItem.propTypes = {
-    list: PropTypes.array.isRequired,
-    match: PropTypes.any
+AutoItemCard.propTypes = {
+    item: PropTypes.shape({
+        mark: PropTypes.string.isRequired,
+        //...
+    })
 };
-
 
 export default AutoItem;

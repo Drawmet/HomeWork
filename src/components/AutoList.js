@@ -1,15 +1,30 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AddCarContainer from '../containers/CarAddContainer'
 import Maps from "./Maps";
+
+import AddCarContainer from '../containers/CarAddContainer'
+import Pagination from "./Pagination";
+import {CARS_PER_PAGE} from "../utils/constants";
 
 /**
  *
  */
 class AutoList extends Component {
+    state = {
+        currentPage: 1,
+        elementsPerPage: CARS_PER_PAGE,
+        totalPages: Math.ceil(this.props.list.length / CARS_PER_PAGE)
+    };
+
     renderRows = () => {
-        return this.props.list.map((car) => {
+        const {currentPage, elementsPerPage} = this.state;
+
+        const indexOfLastCars = currentPage * elementsPerPage;
+        const indexOfFirstCars = indexOfLastCars - elementsPerPage;
+
+        const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
+        return currentCars.map((car) => {
             return (
                 <tr key={`auto_list_row_${car.id}`}>
                     <td>{car.mark}</td>
@@ -50,6 +65,7 @@ class AutoList extends Component {
     }
 
     render() {
+
         return (
             <div className="container">
                 <div className="row justify-content-between">
@@ -73,10 +89,21 @@ class AutoList extends Component {
                     {this.renderRows()}
                     </tbody>
                 </table>
+                <div className="row">
+                    <Pagination
+                        list={this.props.list}
+                        currentPage={this.state.currentPage}
+                        onPrev={() => this.setState({
+                            currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1
+                        })}
+                        onPage={(number) => this.setState({ currentPage: number })}
+                        onNext={() => this.setState({
+                            currentPage: this.state.currentPage < this.state.totalPages ? this.state.currentPage + 1 : this.state.totalPages
+                        })}
+                    />
+                </div>
 
                 <Maps markers={this.props.list}/>
-
-                {/*<ul className="list-group">{itemsCars}</ul>*/}
             </div>
         );
     }

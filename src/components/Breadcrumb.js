@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 
 class Breadcrumbs extends Component {
     crumb = (part, partIndex, parts) => {
