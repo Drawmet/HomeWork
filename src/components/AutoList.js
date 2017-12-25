@@ -67,7 +67,9 @@ class AutoList extends Component {
                     <Link to="/">
                         <p className="btn btn-primary">back</p>
                     </Link>
-                    <AddCarContainer/>
+                    <Link to='/auto/add'>
+                        <p className="btn btn-primary">Add car</p>
+                    </Link>
                 </div>
 
                 <table className="table table-striped">
