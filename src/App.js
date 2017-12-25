@@ -19,10 +19,12 @@ class App extends Component {
 
     componentDidMount(){
         setInterval(() => {
-            this.setState({
-                rehydrated: this.props.rehydrated
-            })
-        },500)
+            if(!this.state.rehydrated){
+                this.setState({
+                    rehydrated: this.props.rehydrated
+                })
+            }
+        },1000)
     }
 
 

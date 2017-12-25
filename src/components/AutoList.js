@@ -98,7 +98,7 @@ class AutoList extends Component {
                     />
                 </div>
 
-                <Maps markers={this.props.list}/>
+                <Maps markers={this.props.list} type={'show'}/>
             </div>
         );
     }

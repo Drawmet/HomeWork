@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Maps from './Maps';
 
 /**
  *
@@ -13,6 +14,13 @@ class CarAdd extends Component {
         image: '',
         latitude: '',
         longitude: ''
+    };
+
+    getPositionOnMap = ({lat, lng}) => {
+        this.setState({
+            latitude: lat,
+            longitude: lng
+        })
     };
 
     dataSubmit = () => {
@@ -43,7 +51,6 @@ class CarAdd extends Component {
                 <button
                     className="btn btn-primary"
                     onClick={() => this.setState({show: true})}>Add car</button>
-
                 {
                     this.state.show &&
                     <div className="modal" role="dialog" style={{display: 'block'}}>
@@ -72,12 +79,19 @@ class CarAdd extends Component {
                                         </label>
                                         <label>
                                             Latitude
-                                            <input className='form-control' onChange={({target: {value}}) => this.setState({latitude: value})}/>
+                                            <input 
+                                                className='form-control'
+                                                value={this.state.latitude} 
+                                                onChange={({target: {value}}) => this.setState({latitude: value})}/>
                                         </label>
                                         <label>
                                             Longitude
-                                            <input className='form-control' onChange={({target: {value}}) => this.setState({longitude: value})}/>
+                                            <input 
+                                                className='form-control' 
+                                                value={this.state.longitude}
+                                                onChange={({target: {value}}) => this.setState({longitude: value})}/>
                                         </label>
+                                    <Maps markers={this.state} type="add" getPositionOnMap={this.getPositionOnMap}/>
                                     </form>
                                 </div>
                                 <div className="modal-footer">
@@ -91,7 +105,7 @@ class CarAdd extends Component {
                                     >Close</button>
                                 </div>
                             </div>
-                        </div>
+                        </div>           
                     </div>
                 }
             </div>

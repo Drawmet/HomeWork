@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
-import Maps from '../components/Maps';
+import Maps from './Maps';
 
 
 class AutoEdit extends Component {
@@ -21,6 +21,13 @@ class AutoEdit extends Component {
             ...this.state
         })
 
+    };
+
+    getPositionOnMap = ({lat, lng}) => {
+        this.setState({
+            latitude: lat,
+            longitude: lng
+        })
     };
 
     renderDropzoneContent = () => {
@@ -73,7 +80,7 @@ class AutoEdit extends Component {
                             style={{height: '150px'}}
                             accept="image/jpeg, image/jpg, image/png"
                             multiple={false}
-                            onDrop={(accepted) => { console.log(accepted),this.setState({image: accepted.map(f=>f.preview).join('')})}}
+                            onDrop={(accepted) => { this.setState({image: accepted.map(f=>f.preview).join('')})}}
                         >
                             {this.renderDropzoneContent()}
                         </Dropzone>
@@ -125,7 +132,7 @@ class AutoEdit extends Component {
                                 />
                             </li>
                         </ul>
-
+                        
                         <Link
                             className="btn btn-primary"
                             onClick={this.dataSubmit}
@@ -135,6 +142,7 @@ class AutoEdit extends Component {
                         </Link>
                     </div>
                 </div>
+                <Maps markers={item} type='edit' getPositionOnMap={this.getPositionOnMap}/>
             </div>
 
 
