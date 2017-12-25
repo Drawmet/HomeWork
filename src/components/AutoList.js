@@ -67,7 +67,9 @@ class AutoList extends Component {
                     <Link to="/">
                         <p className="btn btn-primary">back</p>
                     </Link>
-                    <AddCarContainer/>
+                    <Link to='/auto/add'>
+                        <p className="btn btn-primary">Add car</p>
+                    </Link>
                 </div>
 
                 <table className="table table-striped">
@@ -84,9 +86,10 @@ class AutoList extends Component {
                     {this.renderRows()}
                     </tbody>
                 </table>
-                <div className="row">
+                <div className="row justify-content-center">
                     <Pagination
                         list={this.props.list}
+                        totalPages={this.state.totalPages}
                         currentPage={this.state.currentPage}
                         onPrev={() => this.setState({
                             currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1

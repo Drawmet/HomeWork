@@ -57,5 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
-
 .idea
+
+src/assets/auto_icon.png
+src/assets/Loading_icon.gif

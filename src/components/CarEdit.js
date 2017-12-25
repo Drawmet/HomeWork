@@ -65,84 +65,103 @@ class AutoEdit extends Component {
         return (
             <div className="container">
                 <Link to="/auto">
-                    <p>
+                    <p className="btn btn-primary">
                         back
                     </p>
                 </Link>
 
-                <div className="col-4">
-                    <div
-                        className="card"
+                {/*<div className="col-4">*/}
+                    <form
+                        className="d-flex flex-column align-items-center card"
+                        // className="card"
                         style={{width: '20rem'}}
                     >
-                        <Dropzone
-                            className="card-img-top"
-                            style={{height: '150px'}}
-                            accept="image/jpeg, image/jpg, image/png"
-                            multiple={false}
-                            onDrop={(accepted) => { this.setState({image: accepted.map(f=>f.preview).join('')})}}
-                        >
-                            {this.renderDropzoneContent()}
-                        </Dropzone>
-
+                        {/*<div*/}
+                            {/*className="card"*/}
+                            {/*style={{width: '20rem'}}*/}
+                        {/*>*/}
+                        <div className="form-group">
+                            <Dropzone
+                                className="card-img-top"
+                                style={{height: '150px'}}
+                                accept="image/jpeg, image/jpg, image/png"
+                                multiple={false}
+                                onDrop={(accepted) => { this.setState({image: accepted.map(f=>f.preview).join('')})}}
+                            >
+                                {this.renderDropzoneContent()}
+                            </Dropzone>
+                        </div>
                         <div className="card-body">
                             <h4 className="card-title">{item.mark} - {item.model}</h4>
                         </div>
-
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">
+                        <div className="form-group">
+                            <label>
                                 Model:
                                 <input
-                                    type='text'
+                                    type="text"
+                                    className="form-control"
                                     value={this.state.model}
                                     onChange={({target: {value}}) => this.setState({model: value})}
                                 />
-                            </li>
-                            <li className="list-group-item">
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <label>
                                 Type:
                                 <input
                                       type='text'
+                                      className="form-control"
                                       value={this.state.type}
                                       onChange={({target: {value}}) => this.setState({type: value})}
                                 />
-                            </li>
-                            <li className="list-group-item"
-                                style={{color: item.color}}>
+                            </label>
+                        </div>
+                        <div className="form-group"
+                            style={{color: item.color}}>
+                            <label>
                                 Color:
                                 <input
                                       type='text'
+                                      className="form-control"
                                       value={this.state.color}
                                       onChange={({target: {value}}) => this.setState({color: value})}
                                 />
-                            </li>
-                            <li className="list-group-item">
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <label>
                                 latitude:
                                 <input
                                     type='text'
+                                    className="form-control"
                                     value={this.state.latitude}
                                     onChange={({target: {value}}) => this.setState({latitude: value})}
                                 />
-                            </li>
-                            <li className="list-group-item">
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <label>
                                 longitude:
                                 <input
                                     type='text'
+                                    className="form-control"
                                     value={this.state.longitude}
                                     onChange={({target: {value}}) => this.setState({longitude: value})}
                                 />
-                            </li>
-                        </ul>
-                        
-                        <Link
-                            className="btn btn-primary"
-                            onClick={this.dataSubmit}
-                            to={`/auto/${item.id}/view`}
-                        >
-                            Save
-                        </Link>
-                    </div>
-                </div>
-                <Maps markers={item} type='edit' getPositionOnMap={this.getPositionOnMap}/>
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <Link
+                                className="btn btn-primary"
+                                onClick={this.dataSubmit}
+                                to={`/auto/${item.id}/view`}
+                            >
+                                Save
+                            </Link>
+                        </div>
+                    </form>
+                    <Maps markers={item} type='edit' getPositionOnMap={this.getPositionOnMap}/>
+                {/*</div>*/}
             </div>
 
 
