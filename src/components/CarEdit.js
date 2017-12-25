@@ -58,7 +58,7 @@ class AutoEdit extends Component {
         return (
             <div className="container">
                 <Link to="/auto">
-                    <p>
+                    <p className="btn btn-primary">
                         back
                     </p>
                 </Link>
