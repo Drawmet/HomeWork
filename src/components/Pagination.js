@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {CARS_PER_PAGE} from "../utils/constants";
 
+
 class Pagination extends Component {
     renderPageNumbers = () => {
         const {
@@ -28,6 +29,7 @@ class Pagination extends Component {
             ))
         );
     };
+
 
     render() {
         return (
