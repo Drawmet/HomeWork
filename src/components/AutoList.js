@@ -13,7 +13,8 @@ class AutoList extends Component {
     state = {
         currentPage: 1,
         elementsPerPage: CARS_PER_PAGE,
-        totalPages: Math.ceil(this.props.list.length / CARS_PER_PAGE)
+        totalPages: Math.ceil(this.props.list.length / CARS_PER_PAGE),
+        list: this.props.list
     };
 
     renderRows = () => {
@@ -48,10 +49,17 @@ class AutoList extends Component {
                             <i className="fa fa-fw fa-pencil"></i> edit
                         </Link>
                         <Link
-                            className="btn btn-sm btn-info"
+                            className="btn btn-sm btn-info mr-2"
                             to={`/auto/${car.id}/view`}
                         >
                             <i className="fa fa-fw fa-eye"></i> view
+                        </Link>
+                        <Link
+                            className="btn btn-sm btn-danger"
+                            onClick={() => this.props.deleteCar(car.id)}
+                            to={`/auto`}
+                        >
+                            <i className="fa fa-fw fa-trash"></i> delete
                         </Link>
                     </td>
                 </tr>
@@ -78,7 +86,7 @@ class AutoList extends Component {
                         <th>Type</th>
                         <th>Model</th>
                         <th>Color</th>
-                        <th>Actions</th>
+                        <th className="row justify-content-md-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody>

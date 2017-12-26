@@ -95,8 +95,16 @@ export function editCarAction(car) {
  * @param name
  * @param properties
  */
-export function deleteCarAction(name, properties) {
-    return {
-        type: ACTION_CAR_DELETE
-    }
+export function deleteCarAction(id) {
+    return (dispatch, getState) => {
+        const cars = getState().car.list.filter((car)=> car.id !== id);
+        return dispatch({
+            type: ACTION_CAR_DELETE,
+            payload: {
+                list: [
+                    ...cars
+                ]
+            }
+        })
+    };
 }
