@@ -1,4 +1,4 @@
-import * as UserActions from '../actions/userActions.js'
+import * as UserActions from '../actions/userActions.js';
 import {REHYDRATE} from "redux-persist/constants";
 
 const defaultState = {

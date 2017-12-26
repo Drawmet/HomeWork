@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import Admin from "./components/Admin";
 import Auto from "./routes/auto";
 import Menu from "./components/Menu";
-import User from "./components/User";
+import Users from "./routes/users";
 
 import Breadcrumbs from './components/Breadcrumb';
 import Loader from "./components/Loader";
@@ -62,9 +62,9 @@ class App extends Component {
                             <Auto/> ) : (
                             <Redirect to="/"/> ))}
                     />
-                    <Route path="/user" render={() => (
+                    <Route path="/users" render={() => (
                         loggedIn ? (
-                            <User/> ) : (
+                            <Users/> ) : (
                             <Redirect to="/"/> ))}
                     />
                 </div>
