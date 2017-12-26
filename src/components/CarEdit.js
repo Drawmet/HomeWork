@@ -7,20 +7,48 @@ import Maps from './Maps';
 
 class AutoEdit extends Component {
     state = {
-            image: '',
-            mark:  '',
-            model: '',
-            type: '',
-            color: '',
-            latitude: '',
-            longitude: ''
+        mark: '',
+        markIsValid: 'form-control',
+        model: '',
+        modelIsValid: 'form-control',
+        type: '',
+        typeIsValid: 'form-control',
+        color: '',
+        colorIsValid: 'form-control',
+        image: '',
+        imageIsValid: 'form-control',
+        latitude: '',
+        latitudeIsValid: 'form-control',
+        longitude: '',
+        longitudeIsValid: 'form-control',
     };
 
-    dataSubmit = () => {
-        this.props.editCar({
-            ...this.state
-        })
+    dataSubmit = (e) => {
+        const {
+            mark,
+            model,
+            type,
+            color,
+            image,
+            latitude,
+            longitude
+        } = this.state;
 
+        if(this.state.mark === '' || this.state.model === '' || this.state.type === '' || this.state.color === '' || this.state.latitude === '' || this.state.longitude === ''){
+            this.setState({
+                markIsValid: mark === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                modelIsValid: model === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                typeIsValid: type === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                colorIsValid: color === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                latitudeIsValid: latitude === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                longitudeIsValid: longitude === '' ? 'form-control is-invalid' : 'form-control is-valid',
+            });
+            e.preventDefault();
+        } else {
+            this.props.editCar({
+                ...this.state
+            })
+        }
     };
 
     getPositionOnMap = ({lat, lng}) => {
@@ -99,10 +127,13 @@ class AutoEdit extends Component {
                                 Model:
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className={this.state.modelIsValid}
                                     value={this.state.model}
                                     onChange={({target: {value}}) => this.setState({model: value})}
                                 />
+                            <div className="invalid-feedback">
+                                Please provide a valid model.
+                            </div>
                             </label>
                         </div>
                         <div className="form-group">
@@ -110,10 +141,13 @@ class AutoEdit extends Component {
                                 Type:
                                 <input
                                       type='text'
-                                      className="form-control"
+                                      className={this.state.typeIsValid}
                                       value={this.state.type}
                                       onChange={({target: {value}}) => this.setState({type: value})}
                                 />
+                            <div className="invalid-feedback">
+                                Please provide a valid type.
+                            </div>
                             </label>
                         </div>
                         <div className="form-group"
@@ -122,10 +156,13 @@ class AutoEdit extends Component {
                                 Color:
                                 <input
                                       type='text'
-                                      className="form-control"
+                                      className={this.state.colorIsValid}
                                       value={this.state.color}
                                       onChange={({target: {value}}) => this.setState({color: value})}
                                 />
+                                <div className="invalid-feedback">
+                                    Please provide a valid color.
+                                </div>
                             </label>
                         </div>
                         <div className="form-group">
@@ -133,10 +170,14 @@ class AutoEdit extends Component {
                                 latitude:
                                 <input
                                     type='text'
-                                    className="form-control"
+                                    className={this.state.latitudeIsValid}
+                                    type="number"
                                     value={this.state.latitude}
                                     onChange={({target: {value}}) => this.setState({latitude: value})}
                                 />
+                            <div className="invalid-feedback">
+                                Please provide a valid latitude.
+                            </div>
                             </label>
                         </div>
                         <div className="form-group">
@@ -144,10 +185,14 @@ class AutoEdit extends Component {
                                 longitude:
                                 <input
                                     type='text'
-                                    className="form-control"
+                                    className={this.state.longitudeIsValid}
+                                    type="number"
                                     value={this.state.longitude}
                                     onChange={({target: {value}}) => this.setState({longitude: value})}
                                 />
+                            <div className="invalid-feedback">
+                                Please provide a valid longitude.
+                            </div>
                             </label>
                         </div>
                         <div className="form-group">

@@ -4,19 +4,26 @@ import PropTypes from 'prop-types';
 import Maps from './Maps';
 import {Link} from "react-router-dom";
 
+
 /**
  *
  */
 class CarAdd extends Component {
     state = {
-        show: false,
         mark: '',
+        markIsValid: 'form-control',
         model: '',
+        modelIsValid: 'form-control',
         type: '',
+        typeIsValid: 'form-control',
         color: '',
+        colorIsValid: 'form-control',
         image: '',
+        imageIsValid: 'form-control',
         latitude: '',
-        longitude: ''
+        latitudeIsValid: 'form-control',
+        longitude: '',
+        longitudeIsValid: 'form-control',
     };
 
     getPositionOnMap = ({lat, lng}) => {
@@ -26,7 +33,8 @@ class CarAdd extends Component {
         })
     };
 
-    dataSubmit = () => {
+    dataSubmit = (e) => {
+
         const {
             mark,
             model,
@@ -37,7 +45,18 @@ class CarAdd extends Component {
             longitude
         } = this.state;
 
-        this.props.addNewCar({
+        if(this.state.mark === '' || this.state.model === '' || this.state.type === '' || this.state.color === '' || this.state.latitude === '' || this.state.longitude === ''){
+            this.setState({
+                markIsValid: mark === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                modelIsValid: model === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                typeIsValid: type === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                colorIsValid: color === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                latitudeIsValid: latitude === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                longitudeIsValid: longitude === '' ? 'form-control is-invalid' : 'form-control is-valid',
+            });
+            e.preventDefault();
+        } else {
+            this.props.addNewCar({
             mark,
             model,
             type,
@@ -46,8 +65,7 @@ class CarAdd extends Component {
             latitude,
             longitude
         });
-
-        this.setState({show: false});
+        }
     };
 
     renderDropzoneContent = () => {
@@ -104,60 +122,74 @@ class CarAdd extends Component {
                         <label htmlFor="new-mark">Mark</label>
                         <input
                             id="new-mark"
-                            className='form-control'
+                            className={this.state.markIsValid}
                             onChange={({target: {value}}) => this.setState({mark: value})}
                         />
+                        <div className="invalid-feedback">
+                            Please provide a valid mark.
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="new-model">Model</label>
                         <input
                             id='new-model'
-                            className='form-control'
+                            className={this.state.modelIsValid}
                             onChange={({target: {value}}) => this.setState({model: value})}
                         />
+                        <div className="invalid-feedback">
+                            Please provide a valid model.
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="new-type">Type</label>
                         <input
                             id="new-type"
-                            className='form-control'
+                            className={this.state.typeIsValid}
                             onChange={({target: {value}}) => this.setState({type: value})}
                         />
+                         <div className="invalid-feedback">
+                            Please provide a valid type.
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor='new-color'>Color</label>
                         <input
                             id='new-color'
-                            className='form-control'
+                            className={this.state.colorIsValid}
                             onChange={({target: {value}}) => this.setState({color: value})}
                         />
+                         <div className="invalid-feedback">
+                            Please provide a valid color.
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor='new-lat'>Latitude</label>
                         <input
                             id='new-lat'
-                            className='form-control'
+                            className={this.state.latitudeIsValid}
+                            type="number"
                             value={this.state.latitude}
                             onChange={({target: {value}}) => this.setState({latitude: value})}
                         />
+                         <div className="invalid-feedback">
+                            Please provide a valid latitude.
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor='new-lng'>Longitude</label>
                         <input
                             id='new-lng'
-                            className='form-control'
+                            className={this.state.longitudeIsValid}
+                            type="number"
                             value={this.state.longitude}
                             onChange={({target: {value}}) => this.setState({longitude: value})}
                         />
+                         <div className="invalid-feedback">
+                            Please provide a valid longitude.
+                        </div>
                     </div>
                     <div className="form-group">
-                        <Link
-                            className="btn btn-primary"
-                            onClick={this.dataSubmit}
-                            to='/auto'
-                        >
-                            Save
-                        </Link>
+                        <button className='btn btn-primary' onClick={this.dataSubmit}>Save</button>
                     </div>
                 </form>
                 <Maps markers={this.state} type="add" getPositionOnMap={this.getPositionOnMap}/>
