@@ -27,7 +27,7 @@ export default (state = defaultState, action) => {
         case CarActions.ACTION_CAR_DELETE:
             return {
                 ...state,
-                // list: action.payload.coordinates
+                ...action.payload
             };
         default:
             return state;
