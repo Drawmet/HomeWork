@@ -1,6 +1,3 @@
-import uuid from 'uuid';
-import CarList from '../../data/cars';
-
 export const ACTION_CAR_ADD = "ACTION_CAR_ADD";
 export const ACTION_CAR_EDIT = "ACTION_CAR_EDIT";
 export const ACTION_CAR_DELETE = "ACTION_CAR_DELETE";
@@ -13,18 +10,26 @@ export const ACTION_CAR_GET_BY_ID = "ACTION_CAR_GET_BY_ID";
  * Get prepared list of cars to state.
  */
 export function getCarsToStateAction() {
-    return {
-        type: ACTION_CAR_INITIALIZE,
-        payload: {
-            list: CarList.reduce((acc, mark) => ([
-                ...acc,
-                ...mark.items.map((car) => ({
-                    id: uuid(),
-                    mark: mark.name,
-                    ...car
-                }))
-            ]), [])
-        }
+
+    return dispatch => {
+        fetch('/api/cars/')
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+                res.text().then(data => {
+                    const { status, statusText } = res;
+                    const message = `HTTP status ${status} (${statusText}): ${data}`;
+                    throw new Error(message);
+                });
+            }).then(data => {
+                console.log(data)
+                return dispatch({
+                    type: ACTION_CAR_INITIALIZE,
+                    payload: {
+                        list: data
+                    }
+                });
+            }).catch(error => console.error(error));
     }
 }
 
@@ -35,7 +40,7 @@ export function getCarsToStateAction() {
  */
 export function getCarsByIdAction(id) {
     return (dispatch, getState) => {
-        const {car: {list}} = getState();
+        const { car: { list } } = getState();
 
         const carList = list.reduce((acc, mark) => ([
             ...acc,
@@ -62,12 +67,28 @@ export function getCarsByIdAction(id) {
  * @param data Object that describes new car object.
  */
 export function addCarAction(data) {
-    return {
-        type: ACTION_CAR_ADD,
-        payload: {
-            id: uuid(),
-            ...data
-        }
+    console.log(data);
+    return dispatch => {
+        fetch('/api/cars/', {
+            method: 'POST',
+            body: JSON.stringify(...data)
+        })
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+                res.text().then(data => {
+                    const { status, statusText } = res;
+                    const message = `HTTP status ${status} (${statusText}): ${data}`;
+                    throw new Error(message);
+                });
+            }).then(data => {
+                return dispatch({
+                    type: ACTION_CAR_ADD,
+                    payload: {
+                        ...data
+                    }
+                });
+            }).catch(error => console.error(error));
     }
 }
 

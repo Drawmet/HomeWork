@@ -19,9 +19,10 @@ class AutoList extends Component {
     renderRows = () => {
         const {currentPage, elementsPerPage} = this.state;
 
+        console.log(this.props.list)
         const indexOfLastCars = currentPage * elementsPerPage;
         const indexOfFirstCars = indexOfLastCars - elementsPerPage;
-
+        
         const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
         return currentCars.map((car) => {
             return (
