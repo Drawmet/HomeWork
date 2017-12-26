@@ -8,9 +8,9 @@ const Menu = () => (
         Auto
       </li>
     </Link>
-    <Link to="/user">
+    <Link to="/users">
       <li className="list-group-item list-group-item-action">
-        User
+        Users
       </li>
     </Link>
     <Link to="/admin">
