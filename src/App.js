@@ -78,11 +78,17 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
                     {/*<h1 className="App-title">Welcome to React</h1>*/}
                     <button
-                        className='btn btn-danger'
+                        className='btn btn-danger mr-2'
                         onClick={() => this.props.logoutUser()}
                         disabled={!this.props.loggedIn}
                     >
                         Log out
+                    </button>
+                    <button
+                        className='btn btn-success'
+                        // onClick={() => this.props.logoutUser()}
+                    >
+                        <i className="fa fa-fw fa-shopping-basket"></i>
                     </button>
                 </header>
                 <Breadcrumbs/>
