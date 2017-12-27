@@ -8,8 +8,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    deleteCar: (id) => {
-        dispatch(CarActions.deleteCarAction(id));
+    deleteCar: (id, data) => {
+        dispatch(CarActions.deleteCarAction(id, data));
     }
 });
 

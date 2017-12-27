@@ -12,7 +12,7 @@ const AutoItem = ({list, match: {params: {carid}}}) => {
     return (
         <div className="container">
             <Link to="/auto">
-                <p>
+                <p className="btn btn-primary">
                     back
                 </p>
             </Link>
@@ -39,7 +39,7 @@ AutoItem.propTypes = {
  *
  */
 const AutoItemCard = ({item}) => (
-    <div className="col-4">
+    <div className="col-4 mb-4">
         <div className="card" style={{width: '20rem'}}>
             <img className="card-img-top" style={{height: '150px'}} src={item.image} alt=""/>
             <div className="card-body">
