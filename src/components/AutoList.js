@@ -55,11 +55,18 @@ class AutoList extends Component {
                             <i className="fa fa-fw fa-eye"></i> view
                         </Link>
                         <Link
-                            className="btn btn-sm btn-danger"
+                            className="btn btn-sm btn-danger mr-2"
                             onClick={() => this.props.deleteCar(car.id, car)}
                             to={`/auto`}
                         >
                             <i className="fa fa-fw fa-trash"></i> delete
+                        </Link>
+                        <Link
+                            className="btn btn-sm btn-success"
+                            // onClick={}
+                            to={`/auto`}
+                        >
+                            <i className="fa fa-fw fa-shopping-basket"></i>
                         </Link>
                     </td>
                 </tr>
