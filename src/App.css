@@ -27,3 +27,12 @@
         transform: rotate(360deg);
     }
 }
+
+.popover {
+    /*position: absolute;*/
+    transform: translateX(-50%);
+    left: 50%;
+    top: 30px;
+    width: 100%;
+    max-width: 450px;
+}

@@ -9,9 +9,11 @@ import Auto from "./routes/auto";
 import Menu from "./components/Menu";
 import Users from "./routes/users";
 import BasketContainer from "./containers/BasketContainer";
+import BasketInfo from './components/BasketInfo';
 
 import Breadcrumbs from './components/Breadcrumb';
 import Loader from "./components/Loader";
+
 
 class App extends Component {
     state ={
@@ -90,12 +92,7 @@ class App extends Component {
                     >
                         Log out
                     </button>
-                    <Link
-                        className='btn btn-success'
-                        to="/basket"
-                    >
-                        <i className="fa fa-fw fa-shopping-basket"></i>
-                    </Link>
+                    <BasketInfo />
                     {/*<button*/}
                         {/*className='btn btn-success'*/}
                         {/*// onClick={() => this.props.logoutUser()}*/}
