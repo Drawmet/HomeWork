@@ -6,10 +6,9 @@ import PropTypes from 'prop-types';
  *
  */
 
-const UserView = ({list, match: {params: {userid}}}) => {
+const UserView = ({list ,match: {params: {userid}}}) => {
 
     const user = list.find((user) => user.id === userid);
-
     return (
         <div className="container">
             <Link to="/users">

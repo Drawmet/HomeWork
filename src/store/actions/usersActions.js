@@ -1,5 +1,4 @@
-import uuid from 'uuid';
-import UserList from '../../data/users';
+import {SERVER_URL} from "../../utils/constants";
 
 export const ACTION_USER_ADD = "ACTION_USER_ADD";
 export const ACTION_USER_EDIT = "ACTION_USER_EDIT";
@@ -11,14 +10,26 @@ export const ACTION_USER_INITIALIZE = "ACTION_USER_INITIALIZE";
  */
 
 export function getUsersToStateAction() {
-    return {
-        type: ACTION_USER_INITIALIZE,
-        payload: {
-            list: UserList.map((user) => ({
-                id: uuid(),
-                ...user
-            }))
-        }
+
+    return dispatch => {
+        fetch(`${SERVER_URL}/api/users`)
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+                res.text().then(data => {
+                    const { status, statusText } = res;
+                    const message = `HTTP status ${status} (${statusText}): ${data}`;
+                    throw new Error(message);
+                });
+            }).then(data => {
+
+                return dispatch({
+                    type: ACTION_USER_INITIALIZE,
+                    payload: {
+                        list: data
+                    }
+                });
+        }).catch(error => console.error(error));
     }
 }
 
@@ -27,20 +38,34 @@ export function getUsersToStateAction() {
  * @param user
  */
 export function editUserAction(user) {
-    return (dispatch, getState) => {
-
-        const users = getState().users.list.map((item) => item.id === user.id ? user : item);
-
-        return dispatch({
-            type: ACTION_USER_EDIT,
-            payload: {
-                list: [
-                    ...users
-                ]
+    return (dispatch) => {
+        fetch(`${SERVER_URL}/api/users/${user.id}`,{
+            method: 'PUT',
+            body: JSON.stringify(user),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
             }
         })
-    };
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+                res.text().then(data => {
+                    const { status, statusText } = res;
+                    const message = `HTTP status ${status} (${statusText}): ${data}`;
+                    throw new Error(message);
+                });
+            }).then(data => {
+                return dispatch({
+                type: ACTION_USER_EDIT,
+                payload: {
+                    ...data
+                }
+            });
+        }).catch(error => console.error(error));
+    }
 }
+
 
 /**
  * Action for create new user object.
@@ -48,25 +73,44 @@ export function editUserAction(user) {
  * @param data Object that describes new user object.
  */
 export function addUserAction(data) {
-    return {
-        type: ACTION_USER_ADD,
-        payload: {
-            id: uuid(),
-            ...data
-        }
-    }
-}
 
-export function deleteUserAction(id) {
-    return (dispatch, getState) => {
-        const users = getState().users.list.filter((user) => user.id !== id);
-        return dispatch({
-            type: ACTION_USER_DELETE,
-            payload: {
-                list: [
-                    ...users
-                ]
+    return dispatch => {
+        fetch(`${SERVER_URL}/api/users/`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
             }
         })
-    };
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+                res.text().then(data => {
+                    const { status, statusText } = res;
+                    const message = `HTTP status ${status} (${statusText}): ${data}`;
+                    throw new Error(message);
+                });
+            }).then(data => {
+            return dispatch({
+                type: ACTION_USER_ADD,
+                payload: {
+                    ...data
+                }
+            });
+        }).catch(error => console.error(error));
+    }
+}
+export function deleteUserAction(id) {
+    return (dispatch) => {
+        fetch(`${SERVER_URL}/api/users/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => dispatch({
+                type: ACTION_USER_DELETE,
+                payload: {id}
+            }))
+            .catch(error => console.error(error));
+    }
 }

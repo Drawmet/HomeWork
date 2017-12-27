@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 class UserEdit extends Component {
     state = {
+        id: '',
         username: '',
         password: '',
         name: '',
@@ -15,7 +16,7 @@ class UserEdit extends Component {
     dataSubmit = () => {
         this.props.editUser({
             ...this.state
-        })
+        });
     };
 
     componentDidMount(){
