@@ -22,12 +22,12 @@ export default (state = defaultState, action) => {
         case CarActions.ACTION_CAR_EDIT:
             return {
                 ...state,
-                ...action.payload
+                list: state.list.map(item => (item.id === action.payload.id) ? action.payload : item)
             };
         case CarActions.ACTION_CAR_DELETE:
             return {
                 ...state,
-                ...action.payload
+                list: state.list.filter((car) => car.id !== action.payload.id)
             };
         default:
             return state;

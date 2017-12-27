@@ -20,7 +20,6 @@ class AutoList extends Component {
     renderRows = () => {
         const {currentPage, elementsPerPage} = this.state;
 
-        console.log(this.props.list)
         const indexOfLastCars = currentPage * elementsPerPage;
         const indexOfFirstCars = indexOfLastCars - elementsPerPage;
         
@@ -57,7 +56,7 @@ class AutoList extends Component {
                         </Link>
                         <Link
                             className="btn btn-sm btn-danger"
-                            onClick={() => this.props.deleteCar(car.id)}
+                            onClick={() => this.props.deleteCar(car.id, car)}
                             to={`/auto`}
                         >
                             <i className="fa fa-fw fa-trash"></i> delete

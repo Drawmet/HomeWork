@@ -3,10 +3,12 @@ import {Link} from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import Maps from './Maps';
+import {SERVER_URL} from "../utils/constants";
 
 
 class AutoEdit extends Component {
     state = {
+        id: '',
         mark: '',
         markIsValid: 'form-control',
         model: '',
@@ -29,7 +31,6 @@ class AutoEdit extends Component {
             model,
             type,
             color,
-            image,
             latitude,
             longitude
         } = this.state;
@@ -45,9 +46,10 @@ class AutoEdit extends Component {
             });
             e.preventDefault();
         } else {
+
             this.props.editCar({
                 ...this.state
-            })
+            });
         }
     };
 
@@ -98,16 +100,10 @@ class AutoEdit extends Component {
                     </p>
                 </Link>
 
-                {/*<div className="col-4">*/}
                     <form
-                        className="d-flex flex-column align-items-center card"
-                        // className="card"
+                        className="d-flex flex-column align-items-center card mb-4"
                         style={{width: '20rem'}}
                     >
-                        {/*<div*/}
-                            {/*className="card"*/}
-                            {/*style={{width: '20rem'}}*/}
-                        {/*>*/}
                         <div className="form-group">
                             <Dropzone
                                 className="card-img-top"
@@ -169,7 +165,6 @@ class AutoEdit extends Component {
                             <label>
                                 latitude:
                                 <input
-                                    type='text'
                                     className={this.state.latitudeIsValid}
                                     type="number"
                                     value={this.state.latitude}
@@ -184,7 +179,6 @@ class AutoEdit extends Component {
                             <label>
                                 longitude:
                                 <input
-                                    type='text'
                                     className={this.state.longitudeIsValid}
                                     type="number"
                                     value={this.state.longitude}
