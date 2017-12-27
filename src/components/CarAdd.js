@@ -12,6 +12,8 @@ class CarAdd extends Component {
     state = {
         mark: '',
         markIsValid: 'form-control',
+        cost: '',
+        costIsValid: 'form-control',
         model: '',
         modelIsValid: 'form-control',
         type: '',
@@ -37,6 +39,7 @@ class CarAdd extends Component {
 
         const {
             mark,
+            cost,
             model,
             type,
             color,
@@ -45,9 +48,10 @@ class CarAdd extends Component {
             longitude
         } = this.state;
 
-        if(this.state.mark === '' || this.state.model === '' || this.state.type === '' || this.state.color === '' || this.state.latitude === '' || this.state.longitude === ''){
+        if(this.state.mark === '' || this.state.cost === '' || this.state.model === '' || this.state.type === '' || this.state.color === '' || this.state.latitude === '' || this.state.longitude === ''){
             this.setState({
                 markIsValid: mark === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                costIsValid: cost === '' ? 'form-control is-invalid' : 'form-control is-valid',
                 modelIsValid: model === '' ? 'form-control is-invalid' : 'form-control is-valid',
                 typeIsValid: type === '' ? 'form-control is-invalid' : 'form-control is-valid',
                 colorIsValid: color === '' ? 'form-control is-invalid' : 'form-control is-valid',
@@ -58,6 +62,7 @@ class CarAdd extends Component {
         } else {
             this.props.addNewCar({
             mark,
+            cost,
             model,
             type,
             color,
@@ -127,6 +132,17 @@ class CarAdd extends Component {
                         />
                         <div className="invalid-feedback">
                             Please provide a valid mark.
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="new-cost">Cost</label>
+                        <input
+                            id="new-cost"
+                            className={this.state.costIsValid}
+                            onChange={({target: {value}}) => this.setState({cost: value})}
+                        />
+                        <div className="invalid-feedback">
+                            Please provide a valid cost.
                         </div>
                     </div>
                     <div className="form-group">

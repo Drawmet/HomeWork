@@ -7,7 +7,7 @@ export const ACTION_CAR_INITIALIZE = "ACTION_CAR_INITIALIZE";
 export const ACTION_CAR_GET_LIST = "ACTION_CAR_GET_LIST";
 export const ACTION_CAR_GET_NORMALIZE_LIST = "ACTION_CAR_GET_NORMALIZE_LIST";
 export const ACTION_CAR_GET_BY_ID = "ACTION_CAR_GET_BY_ID";
-
+export const ACTION_CAR_ADD_TO_BASKET = "ACTION_CAR_ADD_TO_BASKET";
 
 /**
  * Get prepared list of cars to state.
@@ -150,3 +150,18 @@ export function deleteCarAction(id) {
             .catch(error => console.error(error));
     }
 }
+
+export function addCarToBasketAction(data) {
+    console.log(data);
+    // return (dispatch, getState) => {
+        // const cars = getState().data.list.map((item) => item)
+        return {
+            type: ACTION_CAR_ADD_TO_BASKET,
+            payload: {
+                data
+            }
+        }
+    // }
+
+}
+

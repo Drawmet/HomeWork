@@ -29,6 +29,12 @@ export default (state = defaultState, action) => {
                 ...state,
                 list: state.list.filter((car) => car.id !== action.payload.id)
             };
+        case CarActions.ACTION_CAR_ADD_TO_BASKET:
+            return {
+                ...state,
+                ...action.payload
+
+            };
         default:
             return state;
     }

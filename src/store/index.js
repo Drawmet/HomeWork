@@ -2,11 +2,13 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import car from './reducers/carReducer';
 import user from './reducers/userReducer';
 import users from './reducers/usersReducer';
+import basket from './reducers/basketReducer';
 import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import {autoRehydrate, persistStore} from 'redux-persist';
 import * as CarActions from "./actions/carActions";
 import * as UsersActions from './actions/usersActions';
+import * as BasketActions from './actions/basketActions';
 
 const middleware = [
     thunk,
@@ -17,7 +19,8 @@ const store = createStore(
     combineReducers({
         car,
         user,
-        users
+        users,
+        basket
     }),
     applyMiddleware(...middleware),
     autoRehydrate()
