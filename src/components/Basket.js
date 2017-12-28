@@ -17,15 +17,14 @@ class Basket extends Component {
     };
 
     renderRows = () => {
-        console.log(this.props, this.state)
         return this.props.list.map((car) => {
             return (
                 <tr key={`auto_list_row_${car.id}`}>
                     <td>
                         <img
                             className="card-img-top"
-                            style={{height: '150px'}}
-                            src={this.props.image}
+                            style={{width: '100px'}}
+                            src={car.image}
                             alt=""
                         />
                     </td>
@@ -33,12 +32,25 @@ class Basket extends Component {
                     <td>{car.type}</td>
                     <td>{car.model}</td>
                     <td>{car.color}</td>
+                    <td>{car.cost}</td>
                 </tr>
             )
         })
     };
+    totalPrice = () => {
+        let total = 0;
+        if (this.props.list.length !== 0) {
+            return (
+                total = this.props.list.map((item) => {
+                    return item.cost
+                }).reduce((a, b) => a + b)
+            )
+        }
+        return total
+    };
 
     render() {
+
         return (
             <div>
                 <div className="row justify-content-between">
@@ -55,6 +67,7 @@ class Basket extends Component {
                         <th>Type</th>
                         <th>Model</th>
                         <th>Color</th>
+                        <th>Cost</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,6 +75,7 @@ class Basket extends Component {
 
                     </tbody>
                 </table>
+                <div>Total price: {this.totalPrice()} USD</div>
             </div>
         )
     }

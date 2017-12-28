@@ -22,8 +22,8 @@ class AutoList extends Component {
 
         const indexOfLastCars = currentPage * elementsPerPage;
         const indexOfFirstCars = indexOfLastCars - elementsPerPage;
-        console.log(this.state)
         const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
+
         return currentCars.map((car) => {
             return (
                 <tr key={`auto_list_row_${car.id}`}>

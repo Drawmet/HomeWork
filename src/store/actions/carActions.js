@@ -37,8 +37,7 @@ export function getCarsToStateAction() {
 
 /**
  *
- * @param name
- * @param properties
+ * @param id
  */
 export function getCarsByIdAction(id) {
     return (dispatch, getState) => {
@@ -69,7 +68,7 @@ export function getCarsByIdAction(id) {
  * @param data Object that describes new car object.
  */
 export function addCarAction(data) {
-    console.log(data);
+
     return dispatch => {
         fetch(`${SERVER_URL}/api/cars/`, {
             method: 'POST',
@@ -105,7 +104,7 @@ export function addCarAction(data) {
 
 export function editCarAction(data) {
     return (dispatch, getState) => {
-        fetch(`${SERVER_URL}/api/cars/${data.id}`,{
+        fetch(`${SERVER_URL}/api/cars/${data.id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
@@ -113,15 +112,15 @@ export function editCarAction(data) {
                 "Content-Type": "application/json",
             }
         })
-    .then(res => {
-            if (res.ok)
-                return res.json();
-            res.text().then(data => {
-                const { status, statusText } = res;
-                const message = `HTTP status ${status} (${statusText}): ${data}`;
-                throw new Error(message);
-            });
-        }).then(data => {
+            .then(res => {
+                if (res.ok)
+                    return res.json();
+                res.text().then(data => {
+                    const {status, statusText} = res;
+                    const message = `HTTP status ${status} (${statusText}): ${data}`;
+                    throw new Error(message);
+                });
+            }).then(data => {
             return dispatch({
                 type: ACTION_CAR_EDIT,
                 payload: {
@@ -151,17 +150,5 @@ export function deleteCarAction(id) {
     }
 }
 
-export function addCarToBasketAction(data) {
-    console.log(data);
-    // return (dispatch, getState) => {
-        // const cars = getState().data.list.map((item) => item)
-        return {
-            type: ACTION_CAR_ADD_TO_BASKET,
-            payload: {
-                data
-            }
-        }
-    // }
 
-}
 
