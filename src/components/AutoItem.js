@@ -48,6 +48,7 @@ const AutoItemCard = ({item}) => (
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">Type: {item.type}</li>
                 <li className="list-group-item" style={{color: item.color}}>Color: {item.color}</li>
+                <li className="list-group-item">Cost: {item.cost} USD</li>
                 <li className="list-group-item">latitude: {item.latitude}</li>
                 <li className="list-group-item">longitude: {item.longitude}</li>
             </ul>

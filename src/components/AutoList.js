@@ -22,7 +22,7 @@ class AutoList extends Component {
 
         const indexOfLastCars = currentPage * elementsPerPage;
         const indexOfFirstCars = indexOfLastCars - elementsPerPage;
-        
+        console.log(this.state)
         const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
         return currentCars.map((car) => {
             return (
@@ -41,6 +41,7 @@ class AutoList extends Component {
                         &nbsp;
                         {car.color}
                     </td>
+                    <td>{car.cost} USD</td>
                     <td style={{width: '1%'}} nowrap="nowrap">
                         <Link
                             className="btn btn-sm btn-warning mr-2"
@@ -55,12 +56,19 @@ class AutoList extends Component {
                             <i className="fa fa-fw fa-eye"></i> view
                         </Link>
                         <Link
-                            className="btn btn-sm btn-danger"
+                            className="btn btn-sm btn-danger mr-2"
                             onClick={() => this.props.deleteCar(car.id, car)}
                             to={`/auto`}
                         >
                             <i className="fa fa-fw fa-trash"></i> delete
                         </Link>
+                        <button
+                            className="btn btn-sm btn-success"
+                            onClick={() => this.props.addItem(car)}
+                        >
+                            <i className="fa fa-fw fa-shopping-basket"></i>
+                        </button>
+
                     </td>
                 </tr>
             )
@@ -86,6 +94,7 @@ class AutoList extends Component {
                         <th>Type</th>
                         <th>Model</th>
                         <th>Color</th>
+                        <th>Cost</th>
                         <th className="row justify-content-md-center">Actions</th>
                     </tr>
                     </thead>
@@ -112,7 +121,7 @@ class AutoList extends Component {
             </div>
         );
     }
-};
+}
 
 AutoList.propTypes = {
     list: PropTypes.array.isRequired

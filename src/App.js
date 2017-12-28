@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Link, Redirect, Route} from 'react-router-dom';
 
 import logo from './logo.svg';
 import './App.css';
@@ -8,9 +8,12 @@ import Admin from "./components/Admin";
 import Auto from "./routes/auto";
 import Menu from "./components/Menu";
 import Users from "./routes/users";
+import BasketContainer from "./containers/BasketContainer";
+import BasketInfo from './components/BasketInfo';
 
 import Breadcrumbs from './components/Breadcrumb';
 import Loader from "./components/Loader";
+
 
 class App extends Component {
     state ={
@@ -67,6 +70,11 @@ class App extends Component {
                             <Users/> ) : (
                             <Redirect to="/"/> ))}
                     />
+                    <Route path="/basket" render={() => (
+                        loggedIn ? (
+                            <BasketContainer />) : (
+                            <Redirect to="/"/>))}
+                    />
                 </div>
             );
     };
@@ -78,12 +86,19 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
                     {/*<h1 className="App-title">Welcome to React</h1>*/}
                     <button
-                        className='btn btn-danger'
+                        className='btn btn-danger mr-2'
                         onClick={() => this.props.logoutUser()}
                         disabled={!this.props.loggedIn}
                     >
                         Log out
                     </button>
+                    <BasketInfo />
+                    {/*<button*/}
+                        {/*className='btn btn-success'*/}
+                        {/*// onClick={() => this.props.logoutUser()}*/}
+                    {/*>*/}
+                        {/*<i className="fa fa-fw fa-shopping-basket"></i>*/}
+                    {/*</button>*/}
                 </header>
                 <Breadcrumbs/>
                 { this.state.rehydrated ? this.renderRoutes() : <Loader /> }

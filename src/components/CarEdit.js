@@ -11,6 +11,8 @@ class AutoEdit extends Component {
         id: '',
         mark: '',
         markIsValid: 'form-control',
+        cost: '',
+        costIsValid: 'form-control',
         model: '',
         modelIsValid: 'form-control',
         type: '',
@@ -28,6 +30,7 @@ class AutoEdit extends Component {
     dataSubmit = (e) => {
         const {
             mark,
+            cost,
             model,
             type,
             color,
@@ -35,9 +38,10 @@ class AutoEdit extends Component {
             longitude
         } = this.state;
 
-        if(this.state.mark === '' || this.state.model === '' || this.state.type === '' || this.state.color === '' || this.state.latitude === '' || this.state.longitude === ''){
+        if(this.state.mark === '' || this.state.cost === '' || this.state.model === '' || this.state.type === '' || this.state.color === '' || this.state.latitude === '' || this.state.longitude === ''){
             this.setState({
                 markIsValid: mark === '' ? 'form-control is-invalid' : 'form-control is-valid',
+                costIsValid: cost === '' ? 'form-control is-invalid' : 'form-control is-valid',
                 modelIsValid: model === '' ? 'form-control is-invalid' : 'form-control is-valid',
                 typeIsValid: type === '' ? 'form-control is-invalid' : 'form-control is-valid',
                 colorIsValid: color === '' ? 'form-control is-invalid' : 'form-control is-valid',
@@ -46,9 +50,10 @@ class AutoEdit extends Component {
             });
             e.preventDefault();
         } else {
+            const {id, mark, cost, model, type, color, image, latitude, longitude} = this.state;
 
             this.props.editCar({
-                ...this.state
+                id, mark, cost, model, type, color, image, latitude, longitude
             });
         }
     };
@@ -117,6 +122,20 @@ class AutoEdit extends Component {
                         </div>
                         <div className="card-body">
                             <h4 className="card-title">{item.mark} - {item.model}</h4>
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Cost:
+                                <input
+                                    type="text"
+                                    className={this.state.costIsValid}
+                                    value={this.state.cost}
+                                    onChange={({target: {value}}) => this.setState({cost: value})}
+                                />
+                                <div className="invalid-feedback">
+                                    Please provide a valid cost.
+                                </div>
+                            </label>
                         </div>
                         <div className="form-group">
                             <label>
