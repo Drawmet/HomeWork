@@ -29,8 +29,8 @@ class BasketInfo extends Component {
                 <div className="row justify-content-around d-flex" key={`auto_list_row_${car.id}`}>
                     <img
                         className="card-img-top"
-                        style={{height: '50px', width: '50px'}}
-                        src={this.props.image}
+                        style={{height: '75px', width: '75px'}}
+                        src={car.image}
                         alt=""
                     />
                     <p>{car.mark}</p>
