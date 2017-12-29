@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Link, Redirect, Route} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
+import {Elements} from 'react-stripe-elements';
 
 import logo from './logo.svg';
 import './App.css';
@@ -13,70 +14,60 @@ import BasketInfo from './components/BasketInfo';
 
 import Breadcrumbs from './components/Breadcrumb';
 import Loader from "./components/Loader";
+import {connect} from "react-redux";
 
 
 class App extends Component {
-    state ={
-        rehydrated: false
-    };
-
-    componentDidMount(){
-        setInterval(() => {
-            if(!this.state.rehydrated){
-                this.setState({
-                    rehydrated: this.props.rehydrated
-                })
-            }
-        },1000)
-    }
-
-
     renderRoutes = () => {
         const {
             loggedIn,
             authenticationUser,
             err
         } = this.props;
-            return (
-                <div className="container">
-                    <Route exact path="/" render={() => (
-                        loggedIn ? (
-                            <Redirect to="/menu"/>
-                        ) : (
-                            <Login
-                                loggedIn={loggedIn}
-                                authenticationUser={authenticationUser}
-                                err={err}
-                            />
-                        )
-                    )}/>
-                    <Route path="/menu" render={() => (
-                        loggedIn ? (
-                            <Menu/> ) : (
-                            <Redirect to="/"/>))}
-                    />
-                    <Route path="/admin" render={() => (
-                        loggedIn ? (
-                            <Admin/> ) : (
-                            <Redirect to="/"/>))}
-                    />
-                    <Route path="/auto" render={() => (
-                        loggedIn ? (
-                            <Auto/> ) : (
-                            <Redirect to="/"/> ))}
-                    />
-                    <Route path="/users" render={() => (
-                        loggedIn ? (
-                            <Users/> ) : (
-                            <Redirect to="/"/> ))}
-                    />
-                    <Route path="/basket" render={() => (
-                        loggedIn ? (
-                            <BasketContainer />) : (
-                            <Redirect to="/"/>))}
-                    />
-                </div>
-            );
+
+        return (
+            <div className="container">
+                <Route exact path="/" render={() => (
+                    loggedIn ? (
+                        <Redirect to="/menu"/>
+                    ) : (
+                        <Login
+                            loggedIn={loggedIn}
+                            authenticationUser={authenticationUser}
+                            err={err}
+                        />
+                    )
+                )}/>
+                <Route path="/menu" render={() => (
+                    loggedIn ? (
+                        <Menu/>) : (
+                        <Redirect to="/"/>))}
+                />
+                <Route path="/admin" render={() => (
+                    loggedIn ? (
+                        <Admin/>) : (
+                        <Redirect to="/"/>))}
+                />
+                <Route path="/auto" render={() => (
+                    loggedIn ? (
+                        <Auto/>) : (
+                        <Redirect to="/"/>))}
+                />
+                <Route path="/users" render={() => (
+                    loggedIn ? (
+                        <Users/>) : (
+                        <Redirect to="/"/>))}
+                />
+                <Route path="/basket" render={() => (
+                    loggedIn ? (
+                        <Elements>
+                            <BasketContainer/>
+                        </Elements>
+                    ) : (
+                        <Redirect to="/"/>))
+                }/>
+            </div>
+        );
     };
 
     render() {
@@ -92,19 +83,19 @@ class App extends Component {
                     >
                         Log out
                     </button>
-                    <BasketInfo />
+                    <BasketInfo/>
                     {/*<button*/}
-                        {/*className='btn btn-success'*/}
-                        {/*// onClick={() => this.props.logoutUser()}*/}
+                    {/*className='btn btn-success'*/}
+                    {/*// onClick={() => this.props.logoutUser()}*/}
                     {/*>*/}
-                        {/*<i className="fa fa-fw fa-shopping-basket"></i>*/}
+                    {/*<i className="fa fa-fw fa-shopping-basket"></i>*/}
                     {/*</button>*/}
                 </header>
                 <Breadcrumbs/>
-                { this.state.rehydrated ? this.renderRoutes() : <Loader /> }
+                {this.props.rehydrated ? this.renderRoutes() : <Loader/>}
             </div>
         );
     }
 }
 
-export default App;
+export default connect(state => ({...state.app}))(App);

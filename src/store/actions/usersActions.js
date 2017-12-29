@@ -12,23 +12,23 @@ export const ACTION_USER_INITIALIZE = "ACTION_USER_INITIALIZE";
 export function getUsersToStateAction() {
 
     return dispatch => {
-        fetch(`${SERVER_URL}/api/users`)
+        fetch(`${SERVER_URL}/api/users/`)
             .then(res => {
                 if (res.ok)
                     return res.json();
                 res.text().then(data => {
-                    const { status, statusText } = res;
+                    const {status, statusText} = res;
                     const message = `HTTP status ${status} (${statusText}): ${data}`;
                     throw new Error(message);
                 });
             }).then(data => {
 
-                return dispatch({
-                    type: ACTION_USER_INITIALIZE,
-                    payload: {
-                        list: data
-                    }
-                });
+            return dispatch({
+                type: ACTION_USER_INITIALIZE,
+                payload: {
+                    list: data
+                }
+            });
         }).catch(error => console.error(error));
     }
 }
@@ -39,7 +39,7 @@ export function getUsersToStateAction() {
  */
 export function editUserAction(user) {
     return (dispatch) => {
-        fetch(`${SERVER_URL}/api/users/${user.id}`,{
+        fetch(`${SERVER_URL}/api/users/${user.id}`, {
             method: 'PUT',
             body: JSON.stringify(user),
             headers: {
@@ -51,12 +51,12 @@ export function editUserAction(user) {
                 if (res.ok)
                     return res.json();
                 res.text().then(data => {
-                    const { status, statusText } = res;
+                    const {status, statusText} = res;
                     const message = `HTTP status ${status} (${statusText}): ${data}`;
                     throw new Error(message);
                 });
             }).then(data => {
-                return dispatch({
+            return dispatch({
                 type: ACTION_USER_EDIT,
                 payload: {
                     ...data
@@ -87,7 +87,7 @@ export function addUserAction(data) {
                 if (res.ok)
                     return res.json();
                 res.text().then(data => {
-                    const { status, statusText } = res;
+                    const {status, statusText} = res;
                     const message = `HTTP status ${status} (${statusText}): ${data}`;
                     throw new Error(message);
                 });
@@ -101,6 +101,7 @@ export function addUserAction(data) {
         }).catch(error => console.error(error));
     }
 }
+
 export function deleteUserAction(id) {
     return (dispatch) => {
         fetch(`${SERVER_URL}/api/users/${id}`, {

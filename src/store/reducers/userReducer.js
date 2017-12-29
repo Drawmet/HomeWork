@@ -2,7 +2,7 @@ import * as UserActions from '../actions/userActions.js';
 import {REHYDRATE} from "redux-persist/constants";
 
 const defaultState = {
-    user:{
+    user: {
         err: '',
         user: '',
         loggedIn: false,
@@ -46,8 +46,7 @@ export default (state = defaultState, action) => {
         case REHYDRATE:
             return {
                 ...state.user,
-                ...action.payload.user,
-                rehydrated: true
+                ...action.payload.user
             };
         default:
             return state;

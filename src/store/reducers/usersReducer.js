@@ -22,7 +22,7 @@ export default (state = defaultState, action) => {
         case UsersActions.ACTION_USER_EDIT:
             return {
                 ...state,
-                list: state.list.map(item =>(item.id === action.payload.id) ? action.payload : item)
+                list: state.list.map(item => (item.id === action.payload.id) ? action.payload : item)
             };
         case UsersActions.ACTION_USER_DELETE:
             return {

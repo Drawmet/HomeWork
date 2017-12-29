@@ -1,4 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
+import app from './reducers/appReducer';
 import car from './reducers/carReducer';
 import user from './reducers/userReducer';
 import users from './reducers/usersReducer';
@@ -8,7 +9,7 @@ import thunk from 'redux-thunk';
 import {autoRehydrate, persistStore} from 'redux-persist';
 import * as CarActions from "./actions/carActions";
 import * as UsersActions from './actions/usersActions';
-import * as BasketActions from './actions/basketActions';
+import * as AppActions from "./actions/appActions";
 
 const middleware = [
     thunk,
@@ -17,6 +18,7 @@ const middleware = [
 
 const store = createStore(
     combineReducers({
+        app,
         car,
         user,
         users,
@@ -32,9 +34,11 @@ persistStore(store, {
     if (!store.getState().car.list.length) {
         store.dispatch(CarActions.getCarsToStateAction());
     }
-    if (!store.getState().users.list.length) {
-        store.dispatch(UsersActions.getUsersToStateAction());
-    }
+    // if (!store.getState().users.list.length) {
+    //     store.dispatch(UsersActions.getUsersToStateAction());
+    // }
+
+    store.dispatch(AppActions.setRehydrationComplete());
 });//.purgeAll();
 
 export default store;

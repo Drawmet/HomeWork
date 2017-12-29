@@ -4,7 +4,7 @@ const defaultState = {
     list: []
 };
 
-export default (state= defaultState, action) => {
+export default (state = defaultState, action) => {
     switch (action.type) {
         case BasketActions.ACTION_BASKET_ADD:
             return {

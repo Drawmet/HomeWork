@@ -1,5 +1,3 @@
-import {SERVER_URL} from "../../utils/constants";
-
 export const ACTION_BASKET_ADD = "ACTION_BASKET_ADD";
 
 export function addBasketAction(data) {
@@ -9,5 +7,5 @@ export function addBasketAction(data) {
             ...data
         }
     }
-    
+
 }
