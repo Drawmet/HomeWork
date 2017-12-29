@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {CARS_PER_PAGE} from "../utils/constants";
+import {ELEMENTS_PER_PAGE} from "../utils/constants";
 
 
 class Pagination extends Component {
     renderPageNumbers = () => {
         const {
             list,
-            elementsPerPage
+            activeElementsPerPage
         } = this.props;
 
         const pageNumbers = [];
 
-        for (let i = 1; i <= Math.ceil(list.length / elementsPerPage); i++) {
+        for (let i = 1; i <= Math.ceil(list.length / activeElementsPerPage); i++) {
             pageNumbers.push(i);
         }
 
@@ -52,7 +52,7 @@ class Pagination extends Component {
                                 className={this.props.currentPage === this.props.totalPages ? 'page-item disabled' : 'page-item'}
                                 onClick={this.props.onNext}
                             >
-                                <a className="page-link" >
+                                <a className="page-link">
                                     <i className="fa fa-fw  fa-angle-double-right"></i>
                                 </a>
                             </li>
@@ -67,7 +67,7 @@ class Pagination extends Component {
 Pagination.propTypes = {
     list: PropTypes.array.isRequired,
     currentPage: PropTypes.number,
-    elementsPerPage: PropTypes.number,
+    activeElementsPerPage: PropTypes.number,
     onPrev: PropTypes.func,
     onNext: PropTypes.func,
     onPage: PropTypes.func
@@ -75,7 +75,7 @@ Pagination.propTypes = {
 
 Pagination.defaultProps = {
     currentPage: 1,
-    elementsPerPage: CARS_PER_PAGE,
+    activeElementsPerPage: ELEMENTS_PER_PAGE[0],
     onPrev: () => {
     },
     onNext: () => {
