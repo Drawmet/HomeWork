@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Link, Redirect, Route} from 'react-router-dom';
 import {Elements} from 'react-stripe-elements';
 
 import logo from './logo.svg';
@@ -18,13 +18,34 @@ import {connect} from "react-redux";
 
 
 class App extends Component {
+    dropDownUser = () => {
+        return (
+            <div className="dropdown">
+                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {this.props.data.username}
+                </Link>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <Link className="dropdown-item" to="#">Photo</Link>
+                    <Link className="dropdown-item" to="#">{this.props.data.name} {this.props.data.surname}</Link>
+                    <Link
+                        className='btn btn-danger ml-4'
+                        to="#"
+                        onClick={() => this.props.logoutUser()}
+                        disabled={!this.props.loggedIn}
+                    >
+                        Log out
+                    </Link>
+                </div>
+            </div>
+        )
+    };
+
     renderRoutes = () => {
         const {
             loggedIn,
             authenticationUser,
             err
         } = this.props;
-
         return (
             <div className="container">
                 <Route exact path="/" render={() => (
@@ -71,26 +92,42 @@ class App extends Component {
     };
 
     render() {
+
         return (
             <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
+                {/*<header className="App-header">*/}
+                    <nav className="navbar navbar-dark bg-dark collapse navbar-collapse">
+                        <div className="d-flex align-items-center">
+                            <img src={logo} className="App-logo" alt="logo"/>
+                            <div className="dropdown">
+                                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Menu
+                                </Link>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <Menu/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className="d-flex align-items-center">
+                            <BasketInfo/>
+                            {this.props.loggedIn ?
+                                this.dropDownUser()
+                                : ('not logged In')}
+                        </div>
+
+                    </nav>
+
                     {/*<h1 className="App-title">Welcome to React</h1>*/}
-                    <button
-                        className='btn btn-danger mr-2'
-                        onClick={() => this.props.logoutUser()}
-                        disabled={!this.props.loggedIn}
-                    >
-                        Log out
-                    </button>
-                    <BasketInfo/>
+
                     {/*<button*/}
                     {/*className='btn btn-success'*/}
                     {/*// onClick={() => this.props.logoutUser()}*/}
                     {/*>*/}
                     {/*<i className="fa fa-fw fa-shopping-basket"></i>*/}
                     {/*</button>*/}
-                </header>
+                {/*</header>*/}
                 <Breadcrumbs/>
                 {this.props.rehydrated ? this.renderRoutes() : <Loader/>}
             </div>

@@ -29,10 +29,28 @@
 }
 
 .popover {
-    /*position: absolute;*/
-    transform: translateX(-50%);
-    left: 50%;
+    display: none;
+    margin-top: 0.5rem;
+    left: auto;
+    right: 0;
     top: 30px;
+    width: 450px;
+
+}
+.popover-body {
     width: 100%;
     max-width: 450px;
 }
+.btn-popover:hover ~ .popover, .popover:hover {
+    display: block;
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+}
+.dropdown-menu .list-group-item {
+    border: none;
+}
+
+

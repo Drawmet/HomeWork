@@ -34,9 +34,9 @@ persistStore(store, {
     if (!store.getState().car.list.length) {
         store.dispatch(CarActions.getCarsToStateAction());
     }
-    // if (!store.getState().users.list.length) {
-    //     store.dispatch(UsersActions.getUsersToStateAction());
-    // }
+    if (!store.getState().users.list.length) {
+        store.dispatch(UsersActions.getUsersToStateAction());
+    }
 
     store.dispatch(AppActions.setRehydrationComplete());
 });//.purgeAll();
