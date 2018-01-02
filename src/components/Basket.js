@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import {injectStripe, PaymentRequestButtonElement} from 'react-stripe-elements';
+import {PaymentRequestButtonElement} from 'react-stripe-elements';
 
 /**/
 
@@ -40,22 +40,8 @@ class Basket extends Component {
     constructor(props) {
         super(props);
 
-        const paymentRequest = this.props.stripe.paymentRequest({
-            country: 'US',
-            currency: 'usd',
-            total: {
-                label: 'Demo total',
-                amount: 1000,
-            }
-        });
 
-        paymentRequest.on('token', ({complete, token, ...data}) => {
-            console.log('Received Stripe token: ', token);
-            console.log('Received customer information: ', data);
 
-            complete('success');
-            paymentRequest.canMakePayment().then(result => this.setState({canMakePayment: !!result}));
-        });
 
         this.state = {
             id: '',
@@ -67,11 +53,24 @@ class Basket extends Component {
             latitude: '',
             longitude: '',
             canMakePayment: false,
-            paymentRequest: paymentRequest
+            paymentRequest: {},
+            token: {}
         };
+
     }
 
-    confirmOrder = () => {
+    confirmOrder = (e) => {
+        e.preventDefault();
+
+        const paymentRequest = this.props.stripe.paymentRequest({
+            country: 'US',
+            currency: 'usd',
+            total: {
+                label: 'Demo total',
+                amount: 1000,
+            }
+        });
+
         this.props.stripe.createToken('bank_account', {
             country: 'US',
             currency: 'usd',
@@ -80,7 +79,22 @@ class Basket extends Component {
             account_holder_name: 'Jenny Rosen',
             account_holder_type: 'individual',
         }).then(({token}) => {
+            this.setState({token});
             console.log('Received Stripe token:', token);
+        });
+
+        paymentRequest.on('token', ({complete, ...data}) => {
+            console.log('triggered event');
+            console.log('Received Stripe token1: ', this.state.token);
+            console.log('Received customer information: ', data);
+
+            complete('success');
+
+        });
+
+        this.props.stripe.paymentRequest.canMakePayment().then(result => {
+
+            this.setState({canMakePayment: !!result})
         });
     };
 
@@ -113,14 +127,14 @@ class Basket extends Component {
                     className="d-flex justify-content-around"
                 >
                     <div>Total price: {this.totalPrice()} USD</div>
-                    <button
-                        className="btn btn-success"
-                        onClick={this.confirmOrder}
-                    >BUY</button>
-                    {
-                        this.state.canMakePayment &&
+                    {/*<button*/}
+                    {/*className="btn btn-success"*/}
+                    {/*onClick={this.confirmOrder}*/}
+                    {/*>BUY</button>*/}
+                    { this.state.canMakePayment ?
                         <PaymentRequestButtonElement
                             paymentRequest={this.state.paymentRequest}
+                            className="PaymentRequestButton"
                             style={{
                                 // For more details on how to style the Payment Request Button, see:
                                 // https://stripe.com/docs/elements/payment-request-button#styling-the-element
@@ -130,8 +144,12 @@ class Basket extends Component {
                                 },
                             }}
                         >
-
                         </PaymentRequestButtonElement>
+                        :
+                        <button
+                            className="btn btn-success"
+                            onClick={this.confirmOrder}
+                        >BUY</button>
                     }
                 </div>
             </div>
@@ -143,4 +161,4 @@ Basket.propType = {
     list: PropTypes.array.isRequired
 };
 
-export default injectStripe(Basket);
+export default Basket;
