@@ -14,15 +14,78 @@ class AutoList extends Component {
         currentPage: 1,
         elementsPerPage: CARS_PER_PAGE,
         totalPages: Math.ceil(this.props.list.length / CARS_PER_PAGE),
-        list: this.props.list
+        list: this.props.list,
+        currentSort: {},
+        currentSearch: '',
+        sorted: {}
     };
+
+    onSort(type) {
+        const sortType = {};
+
+        if(this.state.currentSort.type !== type) {
+            sortType.value = false;
+        }
+
+        sortType.type = type;
+        sortType.value = !this.state.currentSort.value;
+        this.setState({currentSort: sortType, list: this.state.sorted});
+    }
 
     renderRows = () => {
         const {currentPage, elementsPerPage} = this.state;
+        const toSearch = this.state.currentSearch.toLowerCase();
+
+        const filteredData = this.state.list.filter(item => {
+            const mark = item.mark.toLowerCase();
+            const type = item.type.toLowerCase();
+            const model = item.model.toLowerCase();
+            const color = item.color.toLowerCase();
+            const cost = item.cost;
+            const isMarkMatched = mark.indexOf(toSearch) !== -1;
+            const isTypeMatched = type.indexOf(toSearch) !== -1;
+            const isModelMatched = model.indexOf(toSearch) !== -1;
+            const isColorMatched = color.indexOf(toSearch) !== -1;
+
+            return isMarkMatched ||
+                isTypeMatched ||
+                isModelMatched ||
+                isColorMatched ||
+                cost;
+        });
+
+        this.state.sorted = filteredData.sort((a, b) => {
+            switch (this.state.currentSort.type) {
+                case 'mark':
+                    const aMark = a.mark.toLowerCase();
+                    const bMark = b.mark.toLowerCase();
+                    return aMark.localeCompare(bMark);
+                case 'type':
+                    const aType = a.type.toLowerCase();
+                    const bType = b.type.toLowerCase();
+                    return aType.localeCompare(bType);
+                case 'model':
+                    const aModel = a.model.toLowerCase();
+                    const bModel = b.model.toLowerCase();
+                    return aModel.localeCompare(bModel);
+                case 'color':
+                    const aColor = a.color.toLowerCase();
+                    const bColor = b.color.toLowerCase();
+                    return  aColor.localeCompare(bColor);
+                case 'cost':
+                    const aCost = a.cost;
+                    const bCost = b.cost;
+                    return aCost - bCost
+            }
+        });
+        if (this.state.currentSort.value) {
+            this.state.sorted = this.state.sorted.reverse();
+        }
+
 
         const indexOfLastCars = currentPage * elementsPerPage;
         const indexOfFirstCars = indexOfLastCars - elementsPerPage;
-        const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
+        const currentCars = this.state.sorted.slice(indexOfFirstCars, indexOfLastCars);
 
         return currentCars.map((car) => {
             return (
@@ -76,6 +139,8 @@ class AutoList extends Component {
     };
 
     render() {
+
+
         return (
             <div className="container">
                 <div className="row justify-content-between">
@@ -90,11 +155,11 @@ class AutoList extends Component {
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <th>Mark</th>
-                        <th>Type</th>
-                        <th>Model</th>
-                        <th>Color</th>
-                        <th>Cost</th>
+                        <th onClick={this.onSort.bind(this, 'mark')}>Mark</th>
+                        <th onClick={this.onSort.bind(this, 'type')}>Type</th>
+                        <th onClick={this.onSort.bind(this, 'model')}>Model</th>
+                        <th onClick={this.onSort.bind(this, 'color')}>Color</th>
+                        <th onClick={this.onSort.bind(this, 'cost')}>Cost</th>
                         <th className="row justify-content-md-center">Actions</th>
                     </tr>
                     </thead>
