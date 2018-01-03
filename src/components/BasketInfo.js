@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
  */
 class BasketInfo extends Component {
     state = {
-        show: false,
         mark: '',
         cost: '',
         model: '',
@@ -17,11 +16,6 @@ class BasketInfo extends Component {
         longitude: ''
     };
 
-    dataSubmit = () => {
-
-
-        this.setState({show: false});
-    };
 
     renderBasketItem = () => {
         return this.props.list.map((car) => {
@@ -45,39 +39,27 @@ class BasketInfo extends Component {
     render() {
         return (
             <div style={{position: 'relative'}}>
-                <button
-                    className='btn btn-success'
+                <Link
+                    className='btn btn-success btn-popover'
                     title="Basket"
                     data-content="222"
                     data-toggle="popover"
                     data-placement="bottom"
-                    onClick={() => {
-                        this.state.show === true ? this.setState({show: false}) : this.setState({show: true})
-                    }}
+                    to="/basket"
                 >
                     <span>
                     <i className="fa fa-fw fa-shopping-basket mr-2"></i>
                         {this.props.list.length}
                     </span>
-                </button>
+                </Link>
 
-                {
-                    this.state.show &&
-                    <div className="popover fade bs-popover-bottom show">
-                        <div className="popover-header" style={{color: 'black'}}>Basket</div>
-                        <div className="popover-body">
-                            {this.renderBasketItem()}
-                        </div>
-                        <div className="modal-footer">
-                            <Link
-                                className="btn btn-info"
-                                to="/basket"
-                                onClick={() => this.setState({show: false})}
-                            >Go to basket</Link>
-
-                        </div>
+                <div className="popover fade show">
+                    <div className="popover-header" style={{color: 'black'}}>Basket</div>
+                    <div className="popover-body">
+                        {this.renderBasketItem()}
                     </div>
-                }
+
+                </div>
             </div>
         )
     }

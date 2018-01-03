@@ -6,13 +6,16 @@ import store from './store';
 
 import './index.css';
 import AppContainer from "./containers/AppContainer";
+import {StripeProvider} from 'react-stripe-elements';
 
 ReactDOM.render((
-    <Provider store={store}>
-        <BrowserRouter>
-            <Switch>
-                <AppContainer/>
-            </Switch>
-        </BrowserRouter>
-    </Provider>
+    <StripeProvider apiKey="pk_test_tktlJnvR0dvFG44wrPQR8a9q">
+        <Provider store={store}>
+            <BrowserRouter>
+                <Switch>
+                    <AppContainer/>
+                </Switch>
+            </BrowserRouter>
+        </Provider>
+    </StripeProvider>
 ), document.getElementById('root'));

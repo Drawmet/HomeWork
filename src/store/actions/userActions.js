@@ -18,7 +18,7 @@ export function authorizationUserAction(username, password) {
                 type: ACTION_USER_LOGIN_CORRECT,
                 payload: {
                     err: '',
-                    username: username,
+                    data: user,
                     loggedIn: true
                 }
             }

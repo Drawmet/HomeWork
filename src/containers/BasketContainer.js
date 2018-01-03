@@ -3,6 +3,7 @@ import Basket from "../components/Basket";
 import * as BasketActions from "../store/actions/basketActions";
 
 const mapStateToProps = (state) => ({
+    ...state,
     ...state.basket
 });
 
