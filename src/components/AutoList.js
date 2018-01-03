@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Maps from "./Maps";
 
 import Pagination from "./Pagination";
-import {CARS_PER_PAGE} from "../utils/constants";
+import {ELEMENTS_PER_PAGE} from "../utils/constants";
+
 
 /**
  *
@@ -12,16 +13,17 @@ import {CARS_PER_PAGE} from "../utils/constants";
 class AutoList extends Component {
     state = {
         currentPage: 1,
-        elementsPerPage: CARS_PER_PAGE,
-        totalPages: Math.ceil(this.props.list.length / CARS_PER_PAGE),
+        elementsPerPage: ELEMENTS_PER_PAGE,
+        activeElementsPerPage: ELEMENTS_PER_PAGE[0],
+        totalPages: Math.ceil(this.props.list.length / ELEMENTS_PER_PAGE[0]),
         list: this.props.list
     };
 
     renderRows = () => {
-        const {currentPage, elementsPerPage} = this.state;
+        const {currentPage, activeElementsPerPage} = this.state;
 
-        const indexOfLastCars = currentPage * elementsPerPage;
-        const indexOfFirstCars = indexOfLastCars - elementsPerPage;
+        const indexOfLastCars = currentPage * activeElementsPerPage;
+        const indexOfFirstCars = indexOfLastCars - activeElementsPerPage;
         const currentCars = this.props.list.slice(indexOfFirstCars, indexOfLastCars);
 
         return currentCars.map((car) => {
@@ -75,6 +77,14 @@ class AutoList extends Component {
         });
     };
 
+    handleChangeElementsPerPage = (event) => {
+        this.setState({
+            activeElementsPerPage: +event.target.value,
+            totalPages: Math.ceil(this.props.list.length / this.state.activeElementsPerPage),
+            currentPage: 1
+        });
+    };
+
     render() {
         return (
             <div className="container">
@@ -95,7 +105,15 @@ class AutoList extends Component {
                         <th>Model</th>
                         <th>Color</th>
                         <th>Cost</th>
-                        <th className="row justify-content-md-center">Actions</th>
+                        <th>Actions</th>
+                        <th>
+                            <select id="elementsPerPage" onChange={this.handleChangeElementsPerPage} >
+                                {this.state.elementsPerPage.map((quantity, index) => {
+                                    return (<option key={index} value={quantity}>{quantity}</option>)
+                                })}
+                            </select>
+                        </th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -107,6 +125,7 @@ class AutoList extends Component {
                         list={this.props.list}
                         totalPages={this.state.totalPages}
                         currentPage={this.state.currentPage}
+                        activeElementsPerPage={this.state.activeElementsPerPage}
                         onPrev={() => this.setState({
                             currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1
                         })}
