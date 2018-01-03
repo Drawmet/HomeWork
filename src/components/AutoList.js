@@ -188,7 +188,6 @@ class AutoList extends Component {
                         list={this.props.list}
                         totalPages={this.state.totalPages}
                         currentPage={this.state.currentPage}
-                        activeElementsPerPage={this.state.activeElementsPerPage}
                         onPrev={() => this.setState({
                             currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1
                         })}

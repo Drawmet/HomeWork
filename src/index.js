@@ -9,7 +9,7 @@ import AppContainer from "./containers/AppContainer";
 import {StripeProvider} from 'react-stripe-elements';
 
 ReactDOM.render((
-    <StripeProvider apiKey="pk_test_tktlJnvR0dvFG44wrPQR8a9q">
+    <StripeProvider apiKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh">
         <Provider store={store}>
             <BrowserRouter>
                 <Switch>
