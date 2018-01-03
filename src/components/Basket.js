@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import {PaymentRequestButtonElement} from 'react-stripe-elements';
+import {injectStripe, PaymentRequestButtonElement} from 'react-stripe-elements';
 
 /**/
 
@@ -40,8 +40,22 @@ class Basket extends Component {
     constructor(props) {
         super(props);
 
+        const paymentRequest = this.props.stripe.paymentRequest({
+            country: 'US',
+            currency: 'usd',
+            total: {
+                label: 'Demo total',
+                amount: 1000,
+            }
+        });
 
+        paymentRequest.on('token', ({complete, token, ...data}) => {
+            console.log('Received Stripe token: ', token);
+            console.log('Received customer information: ', data);
 
+            complete('success');
+            paymentRequest.canMakePayment().then(result => this.setState({canMakePayment: !!result}));
+        });
 
         this.state = {
             id: '',
@@ -56,21 +70,9 @@ class Basket extends Component {
             paymentRequest: {},
             token: {}
         };
-
     }
 
-    confirmOrder = (e) => {
-        e.preventDefault();
-
-        const paymentRequest = this.props.stripe.paymentRequest({
-            country: 'US',
-            currency: 'usd',
-            total: {
-                label: 'Demo total',
-                amount: 1000,
-            }
-        });
-
+    confirmOrder = () => {
         this.props.stripe.createToken('bank_account', {
             country: 'US',
             currency: 'usd',
@@ -128,8 +130,8 @@ class Basket extends Component {
                 >
                     <div>Total price: {this.totalPrice()} USD</div>
                     {/*<button*/}
-                        {/*className="btn btn-success"*/}
-                        {/*onClick={this.confirmOrder}*/}
+                    {/*className="btn btn-success"*/}
+                    {/*onClick={this.confirmOrder}*/}
                     {/*>BUY</button>*/}
                     { this.state.canMakePayment ?
                         <PaymentRequestButtonElement
@@ -161,4 +163,4 @@ Basket.propType = {
     list: PropTypes.array.isRequired
 };
 
-export default Basket;
+export default injectStripe(Basket);
