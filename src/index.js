@@ -6,10 +6,8 @@ import store from './store';
 
 import './index.css';
 import AppContainer from "./containers/AppContainer";
-import {StripeProvider} from 'react-stripe-elements';
 
 ReactDOM.render((
-    <StripeProvider apiKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh">
         <Provider store={store}>
             <BrowserRouter>
                 <Switch>
@@ -17,5 +15,4 @@ ReactDOM.render((
                 </Switch>
             </BrowserRouter>
         </Provider>
-    </StripeProvider>
 ), document.getElementById('root'));

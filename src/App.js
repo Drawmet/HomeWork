@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link, Redirect, Route} from 'react-router-dom';
-import {Elements} from 'react-stripe-elements';
 
 import logo from './logo.svg';
 import './App.css';
@@ -81,9 +80,7 @@ class App extends Component {
                 />
                 <Route path="/basket" render={() => (
                     loggedIn ? (
-                        <Elements>
-                            <BasketContainer/>
-                        </Elements>
+                        <BasketContainer/>
                     ) : (
                         <Redirect to="/"/>))
                 }/>
