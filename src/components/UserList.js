@@ -163,7 +163,7 @@ class UserList extends Component {
                 </table>
                 <div className="row justify-content-center">
                     <Pagination
-                        list={this.props.list}
+                        list={this.state.list}
                         totalPages={this.state.totalPages}
                         currentPage={this.state.currentPage}
                         activeElementsPerPage={this.state.activeElementsPerPage}

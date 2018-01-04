@@ -185,9 +185,10 @@ class AutoList extends Component {
                 </table>
                 <div className="row justify-content-center">
                     <Pagination
-                        list={this.props.list}
+                        list={this.state.list}
                         totalPages={this.state.totalPages}
                         currentPage={this.state.currentPage}
+                        activeElementsPerPage={this.state.activeElementsPerPage}
                         onPrev={() => this.setState({
                             currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1
                         })}

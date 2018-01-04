@@ -1,13 +1,24 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import {injectStripe, PaymentRequestButtonElement} from 'react-stripe-elements';
+import crypto from 'crypto';
+import uuid from 'uuid';
 
 /**/
 
 class Basket extends Component {
+    state = {
+        public_key: 'i44457183761',
+        private_key: '2sUBdurwTTqIUEerluQfhaHOmTAOB90bX0jLAgfd',
+        api_url: 'https://www.liqpay.com/api/',
+        makePay: false,
+        totalPrice: 0,
+        data: '',
+        signature: ''
+    };
+
     renderRows = () => {
+
         return this.props.list.map((car) => {
             return (
                 <tr key={`auto_list_row_${car.id}`}>
@@ -31,76 +42,50 @@ class Basket extends Component {
 
     totalPrice = () => {
         if (this.props.list.length) {
-            return this.props.list.map((item) => item.cost).reduce((a, b) => a + b);
+            this.state.totalPrice = this.props.list.map((item) => item.cost).reduce((a, b) => a + b);
+
+            return this.state.totalPrice
         }
 
         return 0;
     };
 
-    constructor(props) {
-        super(props);
-
-        const paymentRequest = this.props.stripe.paymentRequest({
-            country: 'US',
-            currency: 'usd',
-            total: {
-                label: 'Demo total',
-                amount: 1000,
-            }
-        });
-
-        paymentRequest.on('token', ({complete, token, ...data}) => {
-            console.log('Received Stripe token: ', token);
-            console.log('Received customer information: ', data);
-
-            complete('success');
-            paymentRequest.canMakePayment().then(result => this.setState({canMakePayment: !!result}));
-        });
-
-        this.state = {
-            id: '',
-            mark: '',
-            model: '',
-            type: '',
-            color: '',
-            image: '',
-            latitude: '',
-            longitude: '',
-            canMakePayment: false,
-            paymentRequest: {},
-            token: {}
-        };
-    }
 
     confirmOrder = () => {
-        this.props.stripe.createToken('bank_account', {
-            country: 'US',
-            currency: 'usd',
-            routing_number: '110000000',
-            account_number: '000123456789',
-            account_holder_name: 'Jenny Rosen',
-            account_holder_type: 'individual',
-        }).then(({token}) => {
-            this.setState({token});
-            console.log('Received Stripe token:', token);
+
+        this.setState({
+            makePay: true
         });
 
-        paymentRequest.on('token', ({complete, ...data}) => {
-            console.log('triggered event');
-            console.log('Received Stripe token1: ', this.state.token);
-            console.log('Received customer information: ', data);
+        const data = new Buffer(JSON.stringify({
+            version: 3,
+            public_key: 'i44457183761',
+            action: "pay",
+            amount: this.state.totalPrice,
+            currency: "USD",
+            description: "test",
+            order_id: uuid(),
+            sandbox: 1
+        })).toString('base64');
 
-            complete('success');
+        const sha1 = crypto.createHash('sha1');
+        sha1.update(this.state.private_key + data + this.state.private_key);
+        const signature = sha1.digest('base64');
 
+        this.setState({
+            signature: signature,
+            data: data
         });
 
-        this.props.stripe.paymentRequest.canMakePayment().then(result => {
+        return {
+            signature,
+            data
+        };
 
-            this.setState({canMakePayment: !!result})
-        });
     };
 
     render() {
+
         return (
             <div>
                 <div className="row justify-content-between">
@@ -129,30 +114,22 @@ class Basket extends Component {
                     className="d-flex justify-content-around"
                 >
                     <div>Total price: {this.totalPrice()} USD</div>
-                    {/*<button*/}
-                    {/*className="btn btn-success"*/}
-                    {/*onClick={this.confirmOrder}*/}
-                    {/*>BUY</button>*/}
-                    { this.state.canMakePayment ?
-                        <PaymentRequestButtonElement
-                            paymentRequest={this.state.paymentRequest}
-                            className="PaymentRequestButton"
-                            style={{
-                                // For more details on how to style the Payment Request Button, see:
-                                // https://stripe.com/docs/elements/payment-request-button#styling-the-element
-                                paymentRequestButton: {
-                                    theme: 'light',
-                                    height: '64px',
-                                },
-                            }}
-                        >
-                        </PaymentRequestButtonElement>
-                        :
-                        <button
-                            className="btn btn-success"
-                            onClick={this.confirmOrder}
-                        >BUY</button>
+                    {
+                        this.state.makePay ? (
+                            <form method="POST" action="https://www.liqpay.ua/api/3/checkout" acceptCharset="utf-8">
+                                <input type="hidden" name="data" value={this.state.data}/>
+                                <input type="hidden" name="signature" value={this.state.signature}/>
+                                <input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png"/>
+                            </form>
+                        ) : (
+                            <button
+                                className="btn btn-success"
+                                onClick={this.confirmOrder}
+                            >BUY
+                            </button>
+                        )
                     }
+
                 </div>
             </div>
         )
@@ -163,4 +140,4 @@ Basket.propType = {
     list: PropTypes.array.isRequired
 };
 
-export default injectStripe(Basket);
+export default Basket;
