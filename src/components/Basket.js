@@ -114,21 +114,15 @@ class Basket extends Component {
                     className="d-flex justify-content-around"
                 >
                     <div>Total price: {this.totalPrice()} USD</div>
-                    {
-                        this.state.makePay ? (
-                            <form method="POST" action="https://www.liqpay.ua/api/3/checkout" acceptCharset="utf-8">
-                                <input type="hidden" name="data" value={this.state.data}/>
-                                <input type="hidden" name="signature" value={this.state.signature}/>
-                                <input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png"/>
-                            </form>
-                        ) : (
+                        <form method="POST" action="https://www.liqpay.ua/api/3/checkout" acceptCharset="utf-8">
+                            <input type="hidden" name="data" value={this.state.data}/>
+                            <input type="hidden" name="signature" value={this.state.signature}/>
                             <button
                                 className="btn btn-success"
                                 onClick={this.confirmOrder}
                             >BUY
                             </button>
-                        )
-                    }
+                        </form>
 
                 </div>
             </div>
